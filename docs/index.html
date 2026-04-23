@@ -3,25 +3,27 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>뱅크법률집사 — 행원 AI 상담 데모</title>
+<title>뱅크법률집사 — 행원 데모</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet" />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --black:#000;--white:#fff;--gray-100:#f5f5f5;--gray-200:#e5e5e5;--gray-400:#999;
-  --gray-600:#555;--gray-800:#222;--warn:#c0392b;
+  --gray-600:#555;--gray-800:#222;--blue:#1a56db;
 }
 body{font-family:'Pretendard',-apple-system,sans-serif;background:#fff;color:#000;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
-button{font-family:inherit}
 
+/* ── 화면 전환 ── */
 .screen{display:none;min-height:100vh}
 .screen.active{display:flex}
 
-/* LOGIN */
+/* ════════════════════════════════
+   LOGIN
+════════════════════════════════ */
 #screen-login{flex-direction:column;align-items:center;justify-content:center;background:#fff;padding:40px 20px}
 .login-box{width:100%;max-width:400px}
-.login-logo{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:40px}
+.login-logo{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:40px;color:#000}
 .login-logo span{opacity:.4;font-weight:400}
 .login-title{font-size:28px;font-weight:700;line-height:1.25;margin-bottom:8px}
 .login-sub{font-size:13px;color:var(--gray-600);margin-bottom:36px;line-height:1.6}
@@ -29,15 +31,18 @@ button{font-family:inherit}
 .form-group label{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;color:var(--gray-600)}
 .form-group select,.form-group input{width:100%;padding:10px 12px;border:1px solid var(--gray-200);border-radius:2px;font-family:inherit;font-size:14px;background:#fff;color:#000;outline:none;transition:border-color .15s}
 .form-group select:focus,.form-group input:focus{border-color:#000}
-.btn-primary{width:100%;padding:12px;background:#000;color:#fff;border:none;border-radius:2px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;letter-spacing:.02em;transition:opacity .15s}
+.btn-primary{width:100%;padding:12px;background:#000;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;letter-spacing:.02em;transition:opacity .15s}
 .btn-primary:hover{opacity:.8}
 .login-badge{margin-top:28px;font-size:11px;color:var(--gray-400);text-align:center}
 .login-badge b{color:#000;font-weight:600}
 .demo-hint{margin-top:20px;padding:12px 16px;background:var(--gray-100);border-radius:2px;font-size:12px;color:var(--gray-600);line-height:1.6}
 .demo-hint strong{color:#000;display:block;margin-bottom:4px}
 
-/* APP SHELL */
+/* ════════════════════════════════
+   APP SHELL (사이드바 + 메인)
+════════════════════════════════ */
 #screen-app{flex-direction:row;min-height:100vh}
+
 .sidebar{width:220px;flex-shrink:0;border-right:1px solid var(--gray-200);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;height:100vh;background:#fff;z-index:100}
 .sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--gray-200)}
 .sidebar-logo .logo-text{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
@@ -52,139 +57,116 @@ button{font-family:inherit}
 .nav-item:hover{background:var(--gray-100)}
 .nav-item.active{background:var(--gray-100);border-left-color:#000;font-weight:600;color:#000}
 .nav-item .nav-icon{width:14px;text-align:center;font-size:12px;opacity:.6}
-.nav-primary{padding:10px 20px;background:#000;color:#fff;font-weight:600;margin:4px 12px;border-radius:2px;border-left:none;font-size:13px;display:flex;align-items:center;gap:10px;cursor:pointer}
-.nav-primary:hover{background:#000;opacity:.85}
-.nav-primary.active{background:#000;color:#fff;border-left:none}
 .sidebar-footer{padding:16px 20px;border-top:1px solid var(--gray-200);font-size:11px;color:var(--gray-400)}
 .sidebar-footer a{color:#000;cursor:pointer;text-decoration:none;font-weight:600}
 
 .main-area{margin-left:220px;flex:1;min-height:100vh;display:flex;flex-direction:column}
-.main-header{padding:18px 32px;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50}
+
+/* ── 메인 헤더 ── */
+.main-header{padding:20px 32px;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50}
 .page-title{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
-.page-title small{font-weight:400;color:var(--gray-400);margin-left:8px;letter-spacing:normal;text-transform:none;font-size:12px}
 .header-actions{display:flex;align-items:center;gap:12px}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--gray-200);border-radius:2px;font-size:11px;color:var(--gray-600)}
 .badge.active-badge{background:#000;color:#fff;border-color:#000}
 
-.main-content{padding:28px 32px;flex:1;display:flex;flex-direction:column}
-.section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.main-content{padding:32px;flex:1}
+
+/* ── 섹션 레이블 ── */
+.section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .section-label::after{content:'';flex:1;height:1px;background:var(--gray-200)}
 
-.card{border:1px solid var(--gray-200);border-radius:2px;padding:20px}
+/* ── 카드 ── */
+.card{border:1px solid var(--gray-200);border-radius:2px;padding:24px}
+.card-sm{border:1px solid var(--gray-200);border-radius:2px;padding:16px}
+.card+.card,.card-sm+.card-sm{margin-top:12px}
+
+/* ── 그리드 ── */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 
-/* STATS (상단 요약 스트립 — AI 상담 페이지 상단) */
-.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.stat-mini{border:1px solid var(--gray-200);border-radius:2px;padding:12px 14px;background:#fff}
-.stat-mini .stat-label{font-size:10px;color:var(--gray-400);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
-.stat-mini .stat-value{font-size:20px;font-weight:700;line-height:1}
-.stat-mini .stat-desc{font-size:10px;color:var(--gray-600);margin-top:4px}
-.stat-mini .stat-desc.warn{color:var(--warn)}
-
-/* ── AI 상담 메인 ── */
-.consult-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;flex:1;min-height:0}
-.chat-col{display:flex;flex-direction:column;min-width:0}
-.side-col{display:flex;flex-direction:column;gap:16px}
-
-.chat-container{display:flex;flex-direction:column;flex:1;min-height:540px;border:1px solid var(--gray-200);border-radius:2px;background:#fff;overflow:hidden}
-.chat-header{padding:12px 18px;border-bottom:1px solid var(--gray-200);display:flex;justify-content:space-between;align-items:center;background:var(--gray-100)}
-.chat-header-title{font-size:12px;font-weight:700;letter-spacing:.04em}
-.chat-header-title .dot{display:inline-block;width:6px;height:6px;background:#000;border-radius:50%;margin-right:6px;vertical-align:middle}
-.chat-header-actions{display:flex;gap:6px}
-.chat-mini-btn{padding:4px 10px;border:1px solid var(--gray-200);background:#fff;font-size:11px;border-radius:2px;cursor:pointer}
-.chat-mini-btn:hover{background:var(--gray-200)}
-
-.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;min-height:0}
-.msg{display:flex;gap:10px;max-width:88%}
-.msg.user{align-self:flex-end;flex-direction:row-reverse;max-width:75%}
-.msg-bubble{padding:12px 14px;border-radius:2px;font-size:13px;line-height:1.65}
-.msg.bot .msg-bubble{background:var(--gray-100);color:#000;border:1px solid var(--gray-200)}
-.msg.user .msg-bubble{background:#000;color:#fff}
-.msg-avatar{width:30px;height:30px;border-radius:2px;background:var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.msg.bot .msg-avatar{background:#000;color:#fff}
-.msg.user .msg-avatar{background:var(--gray-200);color:#000}
-
-/* 봇 응답 안의 도구 위젯 */
-.bot-tools{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-.tool-card{border:1px solid var(--gray-200);border-radius:2px;padding:12px 14px;background:#fff}
-.tool-card .tool-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.tool-card .tool-tag{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#000;padding:2px 7px;border-radius:2px;font-weight:600}
-.tool-card .tool-title{font-size:13px;font-weight:700}
-.tool-card .tool-sub{font-size:11px;color:var(--gray-600);margin-bottom:8px}
-.tool-card .tool-actions{display:flex;gap:6px;flex-wrap:wrap}
-.tool-btn{padding:7px 12px;border:1px solid #000;background:#fff;font-size:12px;border-radius:2px;cursor:pointer;font-weight:500}
-.tool-btn:hover{background:#000;color:#fff}
-.tool-btn.primary{background:#000;color:#fff}
-.tool-btn.primary:hover{opacity:.85}
-.tool-btn.ghost{border-color:var(--gray-200);color:var(--gray-600);font-weight:400}
-.tool-btn.ghost:hover{background:var(--gray-100);color:#000}
-
-/* 인라인 계산기 결과 */
-.inline-calc{border:1px solid var(--gray-200);border-radius:2px;padding:10px 12px;background:#fff;margin-top:8px;font-size:12px}
-.inline-calc .calc-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed var(--gray-200)}
-.inline-calc .calc-row:last-child{border-bottom:none;font-weight:700;padding-top:6px;margin-top:4px;border-top:1px solid #000;border-bottom:none}
-.inline-calc .calc-row.total{font-size:13px}
-
-/* 인라인 법령 참조 */
-.inline-law{border-left:2px solid #000;padding:8px 12px;margin-top:8px;background:var(--gray-100);font-size:12px}
-.inline-law .law-tag{font-size:10px;font-weight:700;letter-spacing:.04em;margin-bottom:4px}
-.inline-law .law-body{line-height:1.6;color:var(--gray-600)}
-
-/* 인라인 서류 생성 결과 */
-.inline-doc{border:1px dashed #000;padding:12px 14px;margin-top:8px;font-size:12px;line-height:1.7;background:#fff;max-height:220px;overflow-y:auto;white-space:pre-wrap;font-family:'Pretendard',serif}
-
-/* 제안 카드 (대화 시작 전/빠른 시나리오) */
-.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.scenario-btn{padding:14px;border:1px solid var(--gray-200);border-radius:2px;background:#fff;text-align:left;cursor:pointer;transition:background .1s}
-.scenario-btn:hover{background:var(--gray-100);border-color:#000}
-.scenario-btn .sc-tag{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-400);margin-bottom:6px;font-weight:600}
-.scenario-btn .sc-title{font-size:13px;font-weight:700;margin-bottom:4px;line-height:1.3}
-.scenario-btn .sc-desc{font-size:11px;color:var(--gray-600);line-height:1.4}
-
-/* 입력 영역 */
-.chat-input-area{padding:14px 18px;border-top:1px solid var(--gray-200);display:flex;gap:8px;background:#fff}
-.chat-input{flex:1;padding:11px 14px;border:1px solid var(--gray-200);border-radius:2px;font-family:inherit;font-size:13px;outline:none}
-.chat-input:focus{border-color:#000}
-.btn-send{padding:11px 22px;background:#000;color:#fff;border:none;border-radius:2px;font-size:13px;font-weight:600;cursor:pointer}
-.btn-send:hover{opacity:.85}
-
-/* 사이드 박스 (AI 상담 페이지 우측) */
-.side-box{border:1px solid var(--gray-200);border-radius:2px;padding:14px 16px;background:#fff}
-.side-box .sb-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px}
-.side-list{display:flex;flex-direction:column;gap:8px}
-.side-list .sl-item{padding:8px 10px;border:1px solid var(--gray-200);border-radius:2px;cursor:pointer;font-size:12px;line-height:1.4;transition:background .1s}
-.side-list .sl-item:hover{background:var(--gray-100)}
-.side-list .sl-item .sl-meta{font-size:10px;color:var(--gray-400);margin-bottom:2px;letter-spacing:.04em}
-.side-list .sl-item .sl-title{font-weight:600}
-
-.alert-compact{padding:8px 0;border-bottom:1px solid var(--gray-200);display:flex;gap:8px;align-items:flex-start;font-size:12px}
-.alert-compact:last-child{border-bottom:none}
-.alert-compact .ac-dot{width:5px;height:5px;border-radius:50%;background:#000;margin-top:6px;flex-shrink:0}
-.alert-compact .ac-dot.warn{background:var(--warn)}
-.alert-compact .ac-text{flex:1}
-.alert-compact .ac-title{font-weight:600;line-height:1.3;margin-bottom:1px}
-.alert-compact .ac-sub{font-size:10px;color:var(--gray-600);letter-spacing:.02em}
-
-/* 대시보드 페이지 (축소된) */
-.page-content{display:none;flex-direction:column;flex:1}
-.page-content.active{display:flex}
+/* ── 통계 카드 ── */
 .stat-card{border:1px solid var(--gray-200);border-radius:2px;padding:20px}
-.stat-card .stat-label{font-size:11px;color:var(--gray-400);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
-.stat-card .stat-value{font-size:28px;font-weight:700;line-height:1}
-.stat-card .stat-desc{font-size:11px;color:var(--gray-600);margin-top:6px}
-.stat-card .stat-desc.warn{color:var(--warn)}
+.stat-label{font-size:11px;color:var(--gray-400);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.stat-value{font-size:28px;font-weight:700;line-height:1}
+.stat-desc{font-size:11px;color:var(--gray-600);margin-top:6px}
+.stat-desc.up{color:#000}
+.stat-desc.warn{color:#c0392b}
+
+/* ── 알림 ── */
 .alert-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--gray-200)}
 .alert-item:last-child{border-bottom:none}
 .alert-dot{width:6px;height:6px;border-radius:50%;background:#000;margin-top:5px;flex-shrink:0}
-.alert-dot.warn{background:var(--warn)}
+.alert-dot.warn{background:#c0392b}
 .alert-text{flex:1}
 .alert-text .alert-title{font-size:13px;font-weight:600;margin-bottom:2px}
 .alert-text .alert-sub{font-size:11px;color:var(--gray-600)}
 .alert-time{font-size:11px;color:var(--gray-400);flex-shrink:0}
 
-/* 상담 내역 */
+/* ── 빠른 실행 버튼 ── */
+.quick-btn{display:flex;flex-direction:column;gap:6px;padding:16px;border:1px solid var(--gray-200);border-radius:2px;cursor:pointer;transition:background .1s;text-align:left;background:#fff;width:100%}
+.quick-btn:hover{background:var(--gray-100)}
+.quick-btn .qb-icon{font-size:20px;margin-bottom:4px}
+.quick-btn .qb-label{font-size:13px;font-weight:600;color:#000}
+.quick-btn .qb-desc{font-size:11px;color:var(--gray-600);line-height:1.4}
+
+/* ── 채팅 / 상담 ── */
+.chat-container{display:flex;flex-direction:column;height:calc(100vh - 160px);max-height:700px}
+.chat-messages{flex:1;overflow-y:auto;border:1px solid var(--gray-200);border-radius:2px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.msg{display:flex;gap:10px;max-width:80%}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg-bubble{padding:10px 14px;border-radius:2px;font-size:13px;line-height:1.6}
+.msg.bot .msg-bubble{background:var(--gray-100);color:#000}
+.msg.user .msg-bubble{background:#000;color:#fff}
+.msg-avatar{width:28px;height:28px;border-radius:2px;background:var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.msg.bot .msg-avatar{background:#000;color:#fff}
+.chat-input-area{margin-top:12px;display:flex;gap:8px}
+.chat-input{flex:1;padding:10px 12px;border:1px solid var(--gray-200);border-radius:2px;font-family:inherit;font-size:13px;outline:none}
+.chat-input:focus{border-color:#000}
+.btn-send{padding:10px 20px;background:#000;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+
+/* ── 의사결정 버튼 ── */
+.decision-btns{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.decision-btn{padding:8px 14px;border:1px solid var(--gray-200);border-radius:2px;background:#fff;font-family:inherit;font-size:12px;cursor:pointer;text-align:left;transition:background .1s}
+.decision-btn:hover{background:var(--gray-100)}
+
+/* ── 서류 카탈로그 ── */
+.doc-card{border:1px solid var(--gray-200);border-radius:2px;padding:20px;cursor:pointer;transition:background .1s}
+.doc-card:hover{background:var(--gray-100)}
+.doc-card .doc-num{font-size:10px;color:var(--gray-400);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.doc-card .doc-name{font-size:15px;font-weight:700;margin-bottom:6px}
+.doc-card .doc-desc{font-size:12px;color:var(--gray-600);line-height:1.5}
+.doc-card .doc-time{font-size:11px;color:var(--gray-400);margin-top:12px}
+
+/* ── 서류 생성 폼 ── */
+.form-section{border:1px solid var(--gray-200);border-radius:2px;padding:24px;margin-bottom:16px}
+.form-section-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-400);margin-bottom:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-field label{display:block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gray-600);margin-bottom:5px}
+.form-field input,.form-field select,.form-field textarea{width:100%;padding:9px 11px;border:1px solid var(--gray-200);border-radius:2px;font-family:inherit;font-size:13px;color:#000;background:#fff;outline:none;transition:border-color .15s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:#000}
+.form-field textarea{min-height:80px;resize:vertical}
+
+/* ── 채권계산기 ── */
+.calc-result{border:1px solid var(--gray-200);border-radius:2px;padding:24px;background:var(--gray-100)}
+.calc-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--gray-200)}
+.calc-row:last-child{border-bottom:none;padding-top:16px;margin-top:4px}
+.calc-row.total{font-size:16px;font-weight:700}
+.calc-label{font-size:12px;color:var(--gray-600)}
+.calc-value{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.calc-row.total .calc-value{font-size:20px}
+.calc-legal{font-size:11px;color:var(--gray-400);margin-top:8px}
+
+/* ── 법령 검색 ── */
+.search-bar{display:flex;gap:8px;margin-bottom:20px}
+.search-bar input{flex:1;padding:10px 14px;border:1px solid var(--gray-200);border-radius:2px;font-family:inherit;font-size:14px;outline:none}
+.search-bar input:focus{border-color:#000}
+.search-result{border:1px solid var(--gray-200);border-radius:2px;padding:16px 20px;margin-bottom:8px}
+.search-result .result-tag{display:inline-block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#000;color:#fff;padding:2px 8px;border-radius:2px;margin-bottom:8px}
+.search-result .result-title{font-size:14px;font-weight:600;margin-bottom:6px}
+.search-result .result-body{font-size:12px;color:var(--gray-600);line-height:1.7}
+
+/* ── 상담 내역 ── */
 .history-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--gray-200);cursor:pointer}
 .history-row:hover .history-title{text-decoration:underline}
 .history-row:last-child{border-bottom:none}
@@ -193,62 +175,64 @@ button{font-family:inherit}
 .history-title{flex:1;font-size:13px;font-weight:500}
 .history-status{font-size:11px;color:var(--gray-400);flex-shrink:0}
 
-/* 오버레이 (서류 폼 입력) */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;display:none;align-items:center;justify-content:center;padding:20px}
+/* ── 서류 생성 완료 오버레이 ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;display:none;align-items:center;justify-content:center}
 .overlay.show{display:flex}
-.overlay-box{background:#fff;border-radius:2px;padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
-.overlay-title{font-size:16px;font-weight:700;margin-bottom:4px}
-.overlay-sub{font-size:12px;color:var(--gray-600);margin-bottom:18px}
-.overlay-close{float:right;font-size:20px;cursor:pointer;color:var(--gray-400);line-height:1}
-.overlay-close:hover{color:#000}
-.form-field{margin-bottom:12px}
-.form-field label{display:block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gray-600);margin-bottom:5px}
-.form-field input,.form-field textarea,.form-field select{width:100%;padding:9px 11px;border:1px solid var(--gray-200);border-radius:2px;font-family:inherit;font-size:13px;outline:none}
-.form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:#000}
-.form-field textarea{min-height:70px;resize:vertical}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.overlay-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-.btn-outline{padding:10px 18px;background:#fff;color:#000;border:1px solid var(--gray-200);border-radius:2px;font-size:13px;cursor:pointer}
+.overlay-box{background:#fff;border-radius:2px;padding:36px;max-width:480px;width:90%}
+.overlay-icon{font-size:36px;margin-bottom:16px}
+.overlay-title{font-size:18px;font-weight:700;margin-bottom:8px}
+.overlay-body{font-size:13px;color:var(--gray-600);line-height:1.7;margin-bottom:24px}
+.overlay-preview{border:1px solid var(--gray-200);border-radius:2px;padding:16px;font-size:12px;line-height:1.8;background:var(--gray-100);white-space:pre-wrap;margin-bottom:20px;max-height:240px;overflow-y:auto}
+.btn-outline{padding:10px 20px;background:#fff;color:#000;border:1px solid var(--gray-200);border-radius:2px;font-family:inherit;font-size:13px;cursor:pointer;margin-right:8px}
 .btn-outline:hover{background:var(--gray-100)}
-.btn-solid{padding:10px 18px;background:#000;color:#fff;border:none;border-radius:2px;font-size:13px;cursor:pointer;font-weight:600}
-.btn-solid:hover{opacity:.85}
 
-/* 반응형 */
-@media(max-width:1100px){
-  .consult-layout{grid-template-columns:1fr}
-  .side-col{display:none}
-  .scenario-grid{grid-template-columns:1fr 1fr}
-}
+/* ── 진행 바 ── */
+.progress-bar{height:2px;background:var(--gray-200);border-radius:1px;overflow:hidden;margin:12px 0}
+.progress-fill{height:100%;background:#000;border-radius:1px;transition:width .4s ease}
+
+/* ── 탭 ── */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--gray-200);margin-bottom:24px}
+.tab{padding:10px 20px;cursor:pointer;font-size:13px;color:var(--gray-400);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s}
+.tab.active{color:#000;font-weight:600;border-bottom-color:#000}
+
+/* ── 반응형 ── */
 @media(max-width:900px){
   .sidebar{width:60px;padding:16px 0}
-  .sidebar-logo .logo-sub,.sidebar-user .user-name,.sidebar-user .user-inst,.sidebar-user .user-role,.nav-group-label,.nav-item span,.nav-primary span,.sidebar-footer{display:none}
+  .sidebar-logo .logo-sub,.sidebar-user .user-name,.sidebar-user .user-inst,.sidebar-user .user-role,.nav-group-label,.nav-item span,.sidebar-footer{display:none}
   .sidebar-logo .logo-text{font-size:9px}
-  .nav-item,.nav-primary{justify-content:center;padding:12px;margin:2px 8px}
+  .nav-item{justify-content:center;padding:12px}
   .main-area{margin-left:60px}
-  .stats-strip{grid-template-columns:repeat(2,1fr)}
   .grid-4{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:1fr 1fr}
 }
 @media(max-width:600px){
-  .stats-strip,.grid-2,.grid-4,.scenario-grid{grid-template-columns:1fr}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
   .main-content{padding:20px}
   .form-row{grid-template-columns:1fr}
 }
 
-.text-warn{color:var(--warn)}
+/* ── 유틸 ── */
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}
+.mb-8{margin-bottom:8px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}
+.text-sm{font-size:12px}.text-xs{font-size:11px}.text-muted{color:var(--gray-400)}
+.font-bold{font-weight:700}.font-600{font-weight:600}
+.flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}
+.gap-8{gap:8px}.gap-16{gap:16px}
 .hidden{display:none}
-.mt-8{margin-top:8px}.mt-12{margin-top:12px}
-.gen-spin{display:inline-block;animation:spin 1s linear infinite}
+.w-full{width:100%}
+.generating-anim{text-align:center;padding:60px 0}
+.generating-anim .spin{font-size:36px;display:inline-block;animation:spin 1.5s linear infinite;margin-bottom:16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ════ LOGIN ════ -->
 <div id="screen-login" class="screen active">
   <div class="login-box">
-    <div class="login-logo">BankCasa <span>/ 행원 AI 상담 데모</span></div>
-    <div class="login-title">AI 한 번에<br>여신 법률 업무 끝.</div>
-    <div class="login-sub">질문만 하세요. 판단·서류·계산·법령까지 AI가 전부 처리합니다.</div>
+    <div class="login-logo">BankCasa <span>/ 행원 데모</span></div>
+    <div class="login-title">금융기관의 업무 효율을<br>AI로 혁신합니다.</div>
+    <div class="login-sub">신협·단위농협·새마을금고 행원 전용 법률 AI 플랫폼</div>
 
     <div class="form-group">
       <label>기관 유형</label>
@@ -267,7 +251,7 @@ button{font-family:inherit}
       <label>담당자명</label>
       <input id="user-name-input" type="text" placeholder="예) 김여신" />
     </div>
-    <button class="btn-primary" onclick="doLogin()">AI 상담 시작 →</button>
+    <button class="btn-primary" onclick="doLogin()">시작하기 →</button>
 
     <div class="demo-hint">
       <strong>데모 안내</strong>
@@ -277,12 +261,12 @@ button{font-family:inherit}
   </div>
 </div>
 
-<!-- APP -->
+<!-- ════ APP SHELL ════ -->
 <div id="screen-app" class="screen">
   <nav class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-text">BankCasa</div>
-      <div class="logo-sub">행원 AI 상담</div>
+      <div class="logo-sub">행원 전용</div>
     </div>
     <div class="sidebar-user">
       <div class="user-role">여신 담당</div>
@@ -291,13 +275,23 @@ button{font-family:inherit}
     </div>
     <div class="sidebar-nav">
       <div class="nav-group-label">메인</div>
-      <div class="nav-primary active" onclick="goPage('consult')" data-page="consult">
-        <span class="nav-icon">◈</span><span>AI 법률 상담</span>
-      </div>
-      <div class="nav-group-label">보기</div>
-      <div class="nav-item" onclick="goPage('dashboard')" data-page="dashboard">
+      <div class="nav-item active" onclick="goPage('dashboard')" data-page="dashboard">
         <span class="nav-icon">▦</span><span>대시보드</span>
       </div>
+      <div class="nav-group-label">여신 업무</div>
+      <div class="nav-item" onclick="goPage('consult')" data-page="consult">
+        <span class="nav-icon">◈</span><span>AI 법률 상담</span>
+      </div>
+      <div class="nav-item" onclick="goPage('docs')" data-page="docs">
+        <span class="nav-icon">≡</span><span>서류 자동화</span>
+      </div>
+      <div class="nav-item" onclick="goPage('calc')" data-page="calc">
+        <span class="nav-icon">✦</span><span>채권계산기</span>
+      </div>
+      <div class="nav-item" onclick="goPage('regs')" data-page="regs">
+        <span class="nav-icon">◎</span><span>법령 검색</span>
+      </div>
+      <div class="nav-group-label">기록</div>
       <div class="nav-item" onclick="goPage('history')" data-page="history">
         <span class="nav-icon">○</span><span>상담 내역</span>
       </div>
@@ -308,138 +302,22 @@ button{font-family:inherit}
   </nav>
 
   <div class="main-area">
-
-    <!-- ═══ AI 상담 (메인) ═══ -->
-    <div id="page-consult" class="page-content active">
-      <div class="main-header">
-        <div class="page-title">AI 법률 상담 <small>— 행원 전용 · 여신 업무 통합</small></div>
-        <div class="header-actions">
-          <span class="badge active-badge">● 데모 모드</span>
-          <button class="chat-mini-btn" onclick="resetChat()">새 상담</button>
-        </div>
-      </div>
-
-      <div class="main-content">
-
-        <!-- 상단 요약 스트립 -->
-        <div class="stats-strip">
-          <div class="stat-mini">
-            <div class="stat-label">이번 달 상담</div>
-            <div class="stat-value">12</div>
-            <div class="stat-desc">▲ 3건 증가</div>
-          </div>
-          <div class="stat-mini">
-            <div class="stat-label">완료 서류</div>
-            <div class="stat-value">8</div>
-            <div class="stat-desc">이번 달 기준</div>
-          </div>
-          <div class="stat-mini">
-            <div class="stat-label">처리 대기</div>
-            <div class="stat-value text-warn">3</div>
-            <div class="stat-desc warn">긴급 검토</div>
-          </div>
-          <div class="stat-mini">
-            <div class="stat-label">총 누적</div>
-            <div class="stat-value">47</div>
-            <div class="stat-desc">2024~</div>
-          </div>
-        </div>
-
-        <div class="consult-layout">
-
-          <!-- 왼쪽: 채팅 -->
-          <div class="chat-col">
-            <div class="chat-container">
-              <div class="chat-header">
-                <div class="chat-header-title"><span class="dot"></span>법무법인 더 에이치 황해 · AI 어시스턴트</div>
-                <div class="chat-header-actions">
-                  <button class="chat-mini-btn" onclick="exportChat()">대화 저장</button>
-                </div>
-              </div>
-              <div class="chat-messages" id="chat-box"></div>
-              <div class="chat-input-area">
-                <input class="chat-input" id="chat-input" placeholder="상황을 자유롭게 질문하세요 (예: 연체 6개월 담보부 채권 어떻게 처리?)" onkeypress="if(event.key==='Enter')sendMsg()" />
-                <button class="btn-send" onclick="sendMsg()">보내기</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 오른쪽: 사이드 박스 -->
-          <div class="side-col">
-            <div class="side-box">
-              <div class="sb-title">긴급 알림</div>
-              <div class="alert-compact">
-                <div class="ac-dot warn"></div>
-                <div class="ac-text">
-                  <div class="ac-title">연체 94일 · 경매 권고</div>
-                  <div class="ac-sub">홍길동 · 5,200만원</div>
-                </div>
-              </div>
-              <div class="alert-compact">
-                <div class="ac-dot"></div>
-                <div class="ac-text">
-                  <div class="ac-title">가압류 결정 인용</div>
-                  <div class="ac-sub">이영수 · 3,200만원</div>
-                </div>
-              </div>
-              <div class="alert-compact">
-                <div class="ac-dot warn"></div>
-                <div class="ac-text">
-                  <div class="ac-title">금감원 민원 D-2</div>
-                  <div class="ac-sub">금리인하 거부 건</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="side-box">
-              <div class="sb-title">최근 상담</div>
-              <div class="side-list">
-                <div class="sl-item" onclick="loadScenario('auction')">
-                  <div class="sl-meta">04/22 · 임의경매</div>
-                  <div class="sl-title">박철수 담보부 회수</div>
-                </div>
-                <div class="sl-item" onclick="loadScenario('provisional')">
-                  <div class="sl-meta">04/21 · 가압류</div>
-                  <div class="sl-title">김민수 예금 보전</div>
-                </div>
-                <div class="sl-item" onclick="loadScenario('payorder')">
-                  <div class="sl-meta">04/20 · 지급명령</div>
-                  <div class="sl-title">이순자 소액 회수</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="side-box">
-              <div class="sb-title">내장 도구</div>
-              <div style="font-size:11px;color:var(--gray-600);line-height:1.7">
-                AI 상담 답변 안에 자동 호출:<br>
-                · 채권계산기 (원금·이자·인지대)<br>
-                · 서류 자동생성 (8종)<br>
-                · 법령 근거 인용<br>
-                · 판례·사례 매칭
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ═══ 대시보드 (축소) ═══ -->
+    <!-- ── 대시보드 ── -->
     <div id="page-dashboard" class="page-content">
       <div class="main-header">
-        <div class="page-title">대시보드 <small>— 업무 요약</small></div>
+        <div class="page-title">대시보드 /</div>
         <div class="header-actions">
           <span class="badge active-badge">● 데모 모드</span>
+          <span class="badge">법무법인 더 에이치 황해</span>
         </div>
       </div>
       <div class="main-content">
         <div class="section-label">주요 지표 /</div>
-        <div class="grid-4" style="margin-bottom:24px">
+        <div class="grid-4 mb-24">
           <div class="stat-card">
             <div class="stat-label">이번 달 상담</div>
             <div class="stat-value">12</div>
-            <div class="stat-desc">▲ 3건 증가</div>
+            <div class="stat-desc up">▲ 3건 증가</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">완료 서류</div>
@@ -448,7 +326,7 @@ button{font-family:inherit}
           </div>
           <div class="stat-card">
             <div class="stat-label">처리 대기</div>
-            <div class="stat-value text-warn">3</div>
+            <div class="stat-value warn" style="color:#c0392b">3</div>
             <div class="stat-desc warn">긴급 검토 필요</div>
           </div>
           <div class="stat-card">
@@ -458,907 +336,790 @@ button{font-family:inherit}
           </div>
         </div>
 
-        <div class="grid-2" style="gap:24px;align-items:start">
+        <div class="grid-2 mb-24" style="gap:24px;align-items:start">
           <div>
             <div class="section-label">알림 /</div>
             <div class="card">
-              <div class="alert-item"><div class="alert-dot warn"></div><div class="alert-text"><div class="alert-title">연체 94일 — 경매 신청 권고</div><div class="alert-sub">홍길동 조합원 · 담보 있음 · 5,200만원</div></div><div class="alert-time">방금</div></div>
-              <div class="alert-item"><div class="alert-dot"></div><div class="alert-text"><div class="alert-title">가압류 결정 인용</div><div class="alert-sub">예금채권 3,200만원 · 이영수</div></div><div class="alert-time">2시간 전</div></div>
-              <div class="alert-item"><div class="alert-dot warn"></div><div class="alert-text"><div class="alert-title">금감원 민원 회신 필요</div><div class="alert-sub">금리인하요구 거부 건 · D-2</div></div><div class="alert-time">어제</div></div>
+              <div class="alert-item">
+                <div class="alert-dot warn"></div>
+                <div class="alert-text">
+                  <div class="alert-title">연체 94일 — 경매 신청 권고</div>
+                  <div class="alert-sub">홍길동 조합원 · 담보 있음 · 5,200만원</div>
+                </div>
+                <div class="alert-time">방금</div>
+              </div>
+              <div class="alert-item">
+                <div class="alert-dot"></div>
+                <div class="alert-text">
+                  <div class="alert-title">가압류 결정 인용</div>
+                  <div class="alert-sub">예금채권 3,200만원 · 이영수</div>
+                </div>
+                <div class="alert-time">2시간 전</div>
+              </div>
+              <div class="alert-item">
+                <div class="alert-dot warn"></div>
+                <div class="alert-text">
+                  <div class="alert-title">금감원 민원 회신 필요</div>
+                  <div class="alert-sub">금리인하요구 거부 건 · D-2</div>
+                </div>
+                <div class="alert-time">어제</div>
+              </div>
             </div>
           </div>
           <div>
-            <div class="section-label">최근 AI 상담 /</div>
+            <div class="section-label">최근 상담 /</div>
             <div class="card">
-              <div class="history-row" onclick="goPage('consult');loadScenario('auction')">
-                <div class="history-date">04/22</div><div class="history-badge">임의경매</div>
-                <div class="history-title">박철수 — 담보부 채권 회수</div><div class="history-status">완료</div>
+              <div class="history-row" onclick="goPage('consult')">
+                <div class="history-date">04/22</div>
+                <div class="history-badge">임의경매</div>
+                <div class="history-title">박철수 — 담보부 채권 회수</div>
+                <div class="history-status">완료</div>
               </div>
-              <div class="history-row" onclick="goPage('consult');loadScenario('provisional')">
-                <div class="history-date">04/21</div><div class="history-badge">가압류</div>
-                <div class="history-title">김민수 — 예금채권 보전</div><div class="history-status">완료</div>
+              <div class="history-row" onclick="goPage('consult')">
+                <div class="history-date">04/21</div>
+                <div class="history-badge">가압류</div>
+                <div class="history-title">김민수 — 예금채권 보전</div>
+                <div class="history-status">완료</div>
               </div>
-              <div class="history-row" onclick="goPage('consult');loadScenario('payorder')">
-                <div class="history-date">04/20</div><div class="history-badge">지급명령</div>
-                <div class="history-title">이순자 — 소액 채권 회수</div><div class="history-status">서류 대기</div>
+              <div class="history-row" onclick="goPage('consult')">
+                <div class="history-date">04/20</div>
+                <div class="history-badge">지급명령</div>
+                <div class="history-title">이순자 — 소액 채권 회수</div>
+                <div class="history-status">서류 대기</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="mt-12" style="margin-top:32px">
-          <button class="btn-solid" onclick="goPage('consult')">AI 상담 시작하기 →</button>
+        <div class="section-label">빠른 실행 /</div>
+        <div class="grid-4">
+          <button class="quick-btn" onclick="goPage('consult')">
+            <div class="qb-icon">◈</div>
+            <div class="qb-label">AI 법률 상담</div>
+            <div class="qb-desc">상황별 대응 절차<br>즉시 안내</div>
+          </button>
+          <button class="quick-btn" onclick="goPage('docs')">
+            <div class="qb-icon">≡</div>
+            <div class="qb-label">서류 자동화</div>
+            <div class="qb-desc">8종 서류 자동 생성<br>3분 이내</div>
+          </button>
+          <button class="quick-btn" onclick="goPage('calc')">
+            <div class="qb-icon">✦</div>
+            <div class="qb-label">채권계산기</div>
+            <div class="qb-desc">원금·이자·지연손해금<br>인지대·송달료</div>
+          </button>
+          <button class="quick-btn" onclick="goPage('regs')">
+            <div class="qb-icon">◎</div>
+            <div class="qb-label">법령 검색</div>
+            <div class="qb-desc">신협법·농협법<br>내부 지침 검색</div>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- ═══ 상담 내역 ═══ -->
-    <div id="page-history" class="page-content">
+    <!-- ── AI 법률 상담 ── -->
+    <div id="page-consult" class="page-content hidden">
       <div class="main-header">
-        <div class="page-title">상담 내역 <small>— AI 상담 기록</small></div>
+        <div class="page-title">AI 법률 상담 /</div>
         <div class="header-actions">
-          <button class="btn-outline" onclick="goPage('consult')">새 상담 시작</button>
+          <span class="badge">목업 모드</span>
         </div>
       </div>
       <div class="main-content">
-        <div class="card" id="history-list">
-          <div class="history-row" onclick="goPage('consult');loadScenario('auction')">
-            <div class="history-date">04/22</div><div class="history-badge">임의경매</div>
-            <div class="history-title">박철수 — 담보부 채권 회수 방법 상담</div><div class="history-status">완료</div>
+        <div class="chat-container">
+          <div class="chat-messages" id="chat-messages">
+            <div class="msg bot">
+              <div class="msg-avatar">AI</div>
+              <div class="msg-bubble">
+                안녕하세요. 여신 업무 AI 어시스턴트입니다.<br><br>
+                어떤 상황인지 선택하시거나, 직접 입력해주세요.
+                <div class="decision-btns" id="init-btns">
+                  <button class="decision-btn" onclick="startCase('auction')">📋 임의경매 신청</button>
+                  <button class="decision-btn" onclick="startCase('garnishment')">🔒 채권 가압류</button>
+                  <button class="decision-btn" onclick="startCase('payment-order')">📝 지급명령 신청</button>
+                  <button class="decision-btn" onclick="startCase('levy')">⚡ 추심·전부명령</button>
+                  <button class="decision-btn" onclick="startCase('cert-mail')">📮 내용증명 발송</button>
+                  <button class="decision-btn" onclick="startCase('objection')">🛡️ 이의신청서</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="history-row" onclick="goPage('consult');loadScenario('provisional')">
-            <div class="history-date">04/21</div><div class="history-badge">가압류</div>
-            <div class="history-title">김민수 — 예금채권 가압류 실행</div><div class="history-status">완료</div>
-          </div>
-          <div class="history-row" onclick="goPage('consult');loadScenario('payorder')">
-            <div class="history-date">04/20</div><div class="history-badge">지급명령</div>
-            <div class="history-title">이순자 — 소액 채권 지급명령 신청</div><div class="history-status">서류 대기</div>
-          </div>
-          <div class="history-row" onclick="goPage('consult');loadScenario('collection')">
-            <div class="history-date">04/18</div><div class="history-badge">추심</div>
-            <div class="history-title">서경식 — 계좌 추심 집행</div><div class="history-status">완료</div>
-          </div>
-          <div class="history-row" onclick="goPage('consult');loadScenario('notice')">
-            <div class="history-date">04/15</div><div class="history-badge">내용증명</div>
-            <div class="history-title">최민호 — 기한이익 상실 통지</div><div class="history-status">완료</div>
-          </div>
-          <div class="history-row" onclick="goPage('consult');loadScenario('objection')">
-            <div class="history-date">04/12</div><div class="history-badge">이의신청</div>
-            <div class="history-title">김수진 — 지급명령 이의 대응</div><div class="history-status">진행 중</div>
+          <div class="chat-input-area">
+            <input class="chat-input" id="chat-input" type="text" placeholder="상황을 직접 입력하세요 (예: 연체 90일, 담보 있음)..." onkeydown="if(event.key==='Enter')sendChat()"/>
+            <button class="btn-send" onclick="sendChat()">전송</button>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- ── 서류 자동화 ── -->
+    <div id="page-docs" class="page-content hidden">
+      <div class="main-header">
+        <div class="page-title">서류 자동화 /</div>
+        <div class="header-actions">
+          <span class="badge">8종 자동 생성</span>
+        </div>
+      </div>
+      <div class="main-content">
+        <div id="doc-catalog">
+          <div class="section-label">서류 선택 /</div>
+          <div class="grid-4" id="doc-grid">
+            <!-- JS로 생성 -->
+          </div>
+        </div>
+        <div id="doc-form" class="hidden">
+          <div class="flex items-center gap-16 mb-24">
+            <button class="btn-outline" onclick="backToCatalog()">← 목록</button>
+            <div style="font-size:16px;font-weight:700" id="doc-form-title"></div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:30%"></div></div>
+          <div id="form-step-1">
+            <div class="form-section">
+              <div class="form-section-title">채무자 정보</div>
+              <div class="form-row">
+                <div class="form-field"><label>성명</label><input id="f-debtor-name" type="text" placeholder="홍길동" /></div>
+                <div class="form-field"><label>주민등록번호</label><input id="f-debtor-rrn" type="text" placeholder="000000-0000000" /></div>
+              </div>
+              <div class="form-row">
+                <div class="form-field"><label>주소</label><input id="f-debtor-addr" type="text" placeholder="서울시 강남구..." /></div>
+                <div class="form-field"><label>연락처</label><input id="f-debtor-tel" type="text" placeholder="010-0000-0000" /></div>
+              </div>
+            </div>
+            <div class="form-section">
+              <div class="form-section-title">채권 정보</div>
+              <div class="form-row">
+                <div class="form-field"><label>원금 (원)</label><input id="f-principal" type="number" placeholder="50000000" /></div>
+                <div class="form-field"><label>약정이율 (%)</label><input id="f-rate" type="number" placeholder="5.5" step="0.1" /></div>
+              </div>
+              <div class="form-row">
+                <div class="form-field"><label>기산일</label><input id="f-start-date" type="date" /></div>
+                <div class="form-field"><label>이행기</label><input id="f-due-date" type="date" /></div>
+              </div>
+            </div>
+            <div class="form-section" id="collateral-section">
+              <div class="form-section-title">담보 정보 (임의경매 해당)</div>
+              <div class="form-row">
+                <div class="form-field"><label>담보 종류</label>
+                  <select id="f-collateral-type">
+                    <option>부동산 (토지+건물)</option>
+                    <option>토지</option>
+                    <option>건물</option>
+                    <option>예금채권</option>
+                  </select>
+                </div>
+                <div class="form-field"><label>부동산 소재지</label><input id="f-collateral-addr" type="text" placeholder="서울시 강남구..." /></div>
+              </div>
+            </div>
+            <button class="btn-primary" onclick="generateDoc()" style="max-width:200px">서류 생성 →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 채권계산기 ── -->
+    <div id="page-calc" class="page-content hidden">
+      <div class="main-header">
+        <div class="page-title">채권계산기 /</div>
+        <div class="header-actions">
+          <span class="badge">소송촉진법·민법 기준</span>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="grid-2" style="gap:32px;align-items:start">
+          <div>
+            <div class="section-label">입력 /</div>
+            <div class="form-section">
+              <div class="form-section-title">기본 정보</div>
+              <div class="form-field mb-16">
+                <label>원금 (원)</label>
+                <input type="number" id="calc-principal" placeholder="50000000" oninput="calcDebt()" />
+              </div>
+              <div class="form-row">
+                <div class="form-field">
+                  <label>약정이율 (%/년)</label>
+                  <input type="number" id="calc-rate" placeholder="5.5" step="0.1" oninput="calcDebt()" />
+                </div>
+                <div class="form-field">
+                  <label>이자 계산 기간 (일)</label>
+                  <input type="number" id="calc-days" placeholder="365" oninput="calcDebt()" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field">
+                  <label>지연손해금 기간 (일)</label>
+                  <input type="number" id="calc-delay-days" placeholder="90" oninput="calcDebt()" />
+                </div>
+                <div class="form-field">
+                  <label>지연이율 (%/년)</label>
+                  <select id="calc-delay-rate" onchange="calcDebt()">
+                    <option value="12">12% (소송촉진법)</option>
+                    <option value="5">5% (민법)</option>
+                    <option value="6">6% (상법)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-section">
+              <div class="form-section-title">소송 비용</div>
+              <div class="form-field">
+                <label>청구금액 (원) — 인지대 계산용</label>
+                <input type="number" id="calc-claim" placeholder="자동 입력" oninput="calcDebt()" />
+              </div>
+              <div class="form-field mt-8">
+                <label>송달료 회수 (기본 3회)</label>
+                <select id="calc-delivery" onchange="calcDebt()">
+                  <option value="3">3회 (기본)</option>
+                  <option value="5">5회</option>
+                  <option value="7">7회</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="section-label">계산 결과 /</div>
+            <div class="calc-result">
+              <div class="calc-row">
+                <div class="calc-label">원금</div>
+                <div class="calc-value" id="r-principal">—</div>
+              </div>
+              <div class="calc-row">
+                <div class="calc-label">약정 이자</div>
+                <div class="calc-value" id="r-interest">—</div>
+              </div>
+              <div class="calc-row">
+                <div class="calc-label">지연손해금</div>
+                <div class="calc-value" id="r-delay">—</div>
+              </div>
+              <div class="calc-row">
+                <div class="calc-label">인지대</div>
+                <div class="calc-value" id="r-stamp">—</div>
+              </div>
+              <div class="calc-row">
+                <div class="calc-label">송달료</div>
+                <div class="calc-value" id="r-delivery">—</div>
+              </div>
+              <div class="calc-row total">
+                <div class="calc-label" style="font-size:14px;font-weight:700">합계</div>
+                <div class="calc-value" id="r-total">—</div>
+              </div>
+            </div>
+            <div class="calc-legal mt-8">
+              ※ 소송촉진 등에 관한 특례법 §3① 연 12% / 민법 §379 연 5% / 인지액은 민사소송 등 인지법 기준
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 법령 검색 ── -->
+    <div id="page-regs" class="page-content hidden">
+      <div class="main-header">
+        <div class="page-title">법령·지침 검색 /</div>
+        <div class="header-actions">
+          <span class="badge">목업 모드</span>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="search-bar">
+          <input id="reg-input" type="text" placeholder="예) 신협법 임의경매, 연체이자 부과 기준..." onkeydown="if(event.key==='Enter')searchReg()" />
+          <button class="btn-primary" style="max-width:120px" onclick="searchReg()">검색</button>
+        </div>
+        <div class="section-label">자주 찾는 법령 /</div>
+        <div class="grid-2" id="reg-results">
+          <!-- 기본 결과 -->
+          <div class="search-result">
+            <div class="result-tag">신협법</div>
+            <div class="result-title">신용협동조합법 §79 — 임의경매 신청 요건</div>
+            <div class="result-body">담보권자인 조합은 채무 불이행 시 부동산에 대한 임의경매를 신청할 수 있다. 신청 전 14일 이상의 최고가 원칙으로 요구된다.</div>
+          </div>
+          <div class="search-result">
+            <div class="result-tag">민사집행법</div>
+            <div class="result-title">민사집행법 §276 — 채권 가압류</div>
+            <div class="result-body">금전채권이나 금전으로 환산할 수 있는 채권에 대한 보전을 위해 채무자의 제3자에 대한 채권을 가압류할 수 있다.</div>
+          </div>
+          <div class="search-result">
+            <div class="result-tag">소송촉진법</div>
+            <div class="result-title">소송촉진 등에 관한 특례법 §3① — 법정이율</div>
+            <div class="result-body">금전채무의 이행을 명하는 판결 선고일 이후의 지연손해금은 연 12%로 한다 (2019.6.1. 이후 적용).</div>
+          </div>
+          <div class="search-result">
+            <div class="result-tag">농협법</div>
+            <div class="result-title">농업협동조합법 §72 — 조합의 여신업무 범위</div>
+            <div class="result-body">단위농협은 조합원에 대한 대출, 어음 할인 및 지급보증을 할 수 있으며, 조합원이 아닌 자에 대한 여신은 정관에서 정한 범위로 제한한다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 상담 내역 ── -->
+    <div id="page-history" class="page-content hidden">
+      <div class="main-header">
+        <div class="page-title">상담 내역 /</div>
+        <div class="header-actions">
+          <span class="badge" id="history-count">0건</span>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchTab('all')">전체</div>
+          <div class="tab" onclick="switchTab('auction')">임의경매</div>
+          <div class="tab" onclick="switchTab('garnishment')">가압류</div>
+          <div class="tab" onclick="switchTab('other')">기타</div>
+        </div>
+        <div id="history-list">
+          <!-- JS로 렌더 -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- 오버레이: 서류 생성 폼 -->
-<div class="overlay" id="form-overlay">
+<!-- 서류 생성 오버레이 -->
+<div class="overlay" id="doc-overlay">
   <div class="overlay-box">
-    <span class="overlay-close" onclick="closeForm()">×</span>
-    <div class="overlay-title" id="form-title">서류 생성</div>
-    <div class="overlay-sub" id="form-sub">필수 정보만 입력하면 AI가 자동 작성합니다.</div>
-    <div id="form-body"></div>
-    <div class="overlay-actions">
-      <button class="btn-outline" onclick="closeForm()">취소</button>
-      <button class="btn-solid" id="form-submit">생성</button>
+    <div id="overlay-inner">
+      <div class="generating-anim">
+        <div class="spin">⚙️</div>
+        <div style="font-size:14px;color:#555">서류 생성 중...</div>
+        <div class="progress-bar mt-16" style="max-width:200px;margin:16px auto 0">
+          <div class="progress-fill" id="gen-progress" style="width:0%"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-// ═══ 상태 ═══
-const state = {
-  user: '', inst: '', instType: '',
-  chatEl: null, inputEl: null,
+// ════ 상태 ════
+let state = {
+  user: null,
+  history: JSON.parse(localStorage.getItem('bc_teller_history') || '[]'),
+  currentPage: 'dashboard',
+  currentDoc: null
 };
 
-// ═══ 로그인 ═══
-function doLogin(){
+// ════ 로그인 ════
+function doLogin() {
   const type = document.getElementById('inst-type').value;
-  const inst = document.getElementById('inst-name').value.trim();
-  const name = document.getElementById('user-name-input').value.trim();
-  if(!type || !inst || !name){ alert('기관 유형·기관명·담당자명을 모두 입력해주세요.'); return; }
-  state.user = name; state.inst = inst; state.instType = type;
-  document.getElementById('sb-username').textContent = name;
-  document.getElementById('sb-inst').textContent = type + ' · ' + inst;
-  document.getElementById('screen-login').classList.remove('active');
-  document.getElementById('screen-app').classList.add('active');
-  initChat();
-}
-function doLogout(){
-  document.getElementById('screen-app').classList.remove('active');
-  document.getElementById('screen-login').classList.add('active');
-  document.getElementById('inst-type').value = '';
-  document.getElementById('inst-name').value = '';
-  document.getElementById('user-name-input').value = '';
+  const name = document.getElementById('inst-name').value.trim();
+  const uname = document.getElementById('user-name-input').value.trim();
+  if (!type || !name || !uname) { alert('모든 항목을 입력해주세요.'); return; }
+  state.user = { type, inst: name + ' ' + type, name: uname };
+  document.getElementById('sb-username').textContent = uname + ' 님';
+  document.getElementById('sb-inst').textContent = name + ' ' + type;
+  switchScreen('app');
+  renderHistory();
 }
 
-// ═══ 페이지 전환 ═══
-function goPage(page){
-  document.querySelectorAll('.page-content').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  document.querySelectorAll('.nav-item,.nav-primary').forEach(n=>n.classList.remove('active'));
-  const el = document.querySelector(`[data-page="${page}"]`);
-  if(el) el.classList.add('active');
-  window.scrollTo(0,0);
+function doLogout() {
+  switchScreen('login');
 }
 
-// ═══ 채팅 ═══
-function initChat(){
-  state.chatEl = document.getElementById('chat-box');
-  state.inputEl = document.getElementById('chat-input');
-  resetChat();
+function switchScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
 }
 
-function resetChat(){
-  state.chatEl.innerHTML = '';
-  addBot(
-    `안녕하세요 <b>${escape(state.user)}</b>님. 뱅크법률집사 AI 상담원입니다.<br>여신 업무 중 발생한 법률 상황을 자유롭게 질문해주세요. 답변 안에서 <b>채권 계산 · 서류 생성 · 법령 확인</b>이 바로 이어집니다.`,
-    { scenarios: true }
-  );
+// ════ 페이지 전환 ════
+function goPage(page) {
+  document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+  document.getElementById('page-' + page).classList.remove('hidden');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.dataset.page === page);
+  });
+  state.currentPage = page;
+  if (page === 'history') renderHistory();
+  if (page === 'docs') renderDocCatalog();
 }
 
-function addMsg(role, html, opts){
-  const msg = document.createElement('div');
-  msg.className = 'msg ' + role;
-  msg.innerHTML = `
-    <div class="msg-avatar">${role==='bot'?'AI':'나'}</div>
-    <div class="msg-bubble">${html}${opts && opts.tools ? opts.tools : ''}${opts && opts.scenarios ? scenarioGridHTML() : ''}</div>
-  `;
-  state.chatEl.appendChild(msg);
-  state.chatEl.scrollTop = state.chatEl.scrollHeight;
-  return msg;
-}
-function addUser(html){ return addMsg('user', html); }
-function addBot(html, opts){ return addMsg('bot', html, opts); }
-
-function scenarioGridHTML(){
-  return `
-    <div class="bot-tools">
-      <div class="scenario-grid">
-        <button class="scenario-btn" onclick="loadScenario('auction')">
-          <div class="sc-tag">1 · 임의경매</div>
-          <div class="sc-title">담보부 채권 회수</div>
-          <div class="sc-desc">연체 장기·담보 있음</div>
-        </button>
-        <button class="scenario-btn" onclick="loadScenario('provisional')">
-          <div class="sc-tag">2 · 가압류</div>
-          <div class="sc-title">예금·급여 보전</div>
-          <div class="sc-desc">재산 도피 우려</div>
-        </button>
-        <button class="scenario-btn" onclick="loadScenario('payorder')">
-          <div class="sc-tag">3 · 지급명령</div>
-          <div class="sc-title">소액 채권 신속회수</div>
-          <div class="sc-desc">무담보·미납</div>
-        </button>
-        <button class="scenario-btn" onclick="loadScenario('collection')">
-          <div class="sc-tag">4 · 추심</div>
-          <div class="sc-title">계좌·채권 집행</div>
-          <div class="sc-desc">판결·집행권원 有</div>
-        </button>
-        <button class="scenario-btn" onclick="loadScenario('notice')">
-          <div class="sc-tag">5 · 내용증명</div>
-          <div class="sc-title">기한이익 상실</div>
-          <div class="sc-desc">1차 법적 통지</div>
-        </button>
-        <button class="scenario-btn" onclick="loadScenario('objection')">
-          <div class="sc-tag">6 · 이의신청</div>
-          <div class="sc-title">지급명령 이의 대응</div>
-          <div class="sc-desc">채무자 다툰 건</div>
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-function sendMsg(){
-  const v = state.inputEl.value.trim();
-  if(!v) return;
-  addUser(escape(v));
-  state.inputEl.value = '';
-  setTimeout(()=>routeQuestion(v), 400);
-}
-
-function routeQuestion(q){
-  const s = q.toLowerCase();
-  if(/경매|담보|연체.*(\d+개월|장기)|저당/.test(q)) return loadScenario('auction', q);
-  if(/가압류|보전|예금|급여/.test(q)) return loadScenario('provisional', q);
-  if(/지급명령|소액/.test(q)) return loadScenario('payorder', q);
-  if(/추심|계좌.*집행|집행권원/.test(q)) return loadScenario('collection', q);
-  if(/내용증명|기한.*상실|통지/.test(q)) return loadScenario('notice', q);
-  if(/이의|다툼|이의신청/.test(q)) return loadScenario('objection', q);
-  if(/계산|이자|지연손해금|인지대/.test(q)) return loadScenario('calc_only', q);
-  if(/법령|조문|민사집행법|민법/.test(q)) return loadScenario('law_only', q);
-  addBot(`질문: "<i>${escape(q)}</i>"<br><br>아래 유사 시나리오 중 하나를 선택하거나, 질문을 구체화해주세요 (예: 연체 기간·담보 유무·청구 금액).`, { scenarios: true });
-}
-
-// ═══ 시나리오 ═══
-function loadScenario(key, userText){
-  if(!userText){
-    const map = {
-      auction: '연체 6개월째인 조합원, 담보(아파트) 있는데 어떻게 회수할 수 있을까요?',
-      provisional: '조합원이 재산 빼돌릴 것 같아요. 예금이나 급여 가압류 가능한가요?',
-      payorder: '무담보 소액(800만원) 미납 건, 가장 빠르게 회수할 방법은?',
-      collection: '판결문은 받았는데 상대 계좌에 돈이 있는지 모릅니다. 추심 절차 알려주세요.',
-      notice: '연체 2개월 된 조합원에게 기한이익 상실 통지를 보내고 싶습니다.',
-      objection: '채무자가 지급명령에 이의신청을 했어요. 어떻게 대응해야 하나요?',
-      calc_only: '원금 3,000만원, 약정이자 4.5%, 연체 18개월. 회수 총액 계산해주세요.',
-      law_only: '담보 실행 관련 민사집행법 조문 알려주세요.',
-    };
-    addUser(escape(map[key] || key));
-  }
-  setTimeout(()=>renderScenario(key), 350);
-}
-
-function renderScenario(key){
-  const S = SCENARIOS[key];
-  if(!S){ addBot('해당 시나리오 데이터가 없습니다.'); return; }
-  const tools = `<div class="bot-tools">${S.tools}</div>`;
-  addBot(S.answer, { tools });
-}
-
-const SCENARIOS = {
+// ════ AI 상담 (의사결정 트리) ════
+const CASES = {
   auction: {
-    answer: `<b>임의경매 신청을 권고합니다.</b> 담보(근저당권)가 설정돼 있고 연체 6개월이면 기한이익 상실 통지 후 임의경매 개시가 가능한 단계입니다.<br><br>
-      <b>진행 순서</b><br>
-      ① 기한이익 상실 통지(내용증명) 발송 → ② 채권 총액 산출 → ③ 관할 지방법원에 임의경매 신청서 접수 → ④ 매각허가결정 → ⑤ 배당 회수<br><br>
-      예상 기간: 통상 8~14개월, 회수율: 담보가 대비 평균 70~85%`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 1</span><span class="tool-title">채권 총액 계산</span></div>
-        <div class="tool-sub">원금·약정이자·지연손해금·인지대·송달료를 자동 산출합니다.</div>
-        <div class="inline-calc" id="calc-auction-inline">
-          <div class="calc-row"><span>원금</span><span>50,000,000원</span></div>
-          <div class="calc-row"><span>약정이자 (연 4.5% · 12개월)</span><span>2,250,000원</span></div>
-          <div class="calc-row"><span>지연손해금 (연 15% · 6개월)</span><span>3,750,000원</span></div>
-          <div class="calc-row"><span>인지대</span><span>230,000원</span></div>
-          <div class="calc-row"><span>송달료</span><span>51,000원</span></div>
-          <div class="calc-row total"><span>청구 총액</span><span>56,281,000원</span></div>
-        </div>
-        <div class="tool-actions mt-8">
-          <button class="tool-btn ghost" onclick="openFormCalc()">수치 수정하기</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 2</span><span class="tool-title">임의경매 신청서 자동생성</span></div>
-        <div class="tool-sub">위 계산 결과를 그대로 반영해 신청서를 작성합니다.</div>
-        <div class="tool-actions">
-          <button class="tool-btn primary" onclick="openForm('auction')">신청서 작성</button>
-          <button class="tool-btn" onclick="openForm('notice_auction')">내용증명 먼저 작성</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">근거 법령</span><span class="tool-title">민사집행법 / 민법</span></div>
-        <div class="inline-law">
-          <div class="law-tag">민사집행법 제264조 (부동산에 대한 강제집행)</div>
-          <div class="law-body">저당권·전세권·질권 등 담보물권이 있는 채권자는 담보권 실행을 위해 경매를 신청할 수 있다.</div>
-        </div>
-        <div class="inline-law">
-          <div class="law-tag">민법 제388조 (기한이익 상실)</div>
-          <div class="law-body">채무자가 이자를 지급하지 아니한 때에는 기한의 이익을 주장하지 못한다.</div>
-        </div>
-      </div>
-    `
+    name: '임의경매',
+    steps: [
+      { bot: '담보 종류를 선택해주세요.', options: ['부동산 (토지+건물)', '토지', '건물'] },
+      { bot: '현재 연체 기간이 얼마나 되었나요?', options: ['30일 미만', '30~90일', '90일 이상'] },
+      { bot: '채무자에게 사전 최고(독촉)를 하셨나요?', options: ['예, 서면 최고 완료', '아니오 (미실시)'] }
+    ],
+    result: '임의경매 신청이 가능한 상태입니다.\n\n✅ 절차:\n1. 담보물 등기부등본 열람\n2. 채권 원리금 확인 계산서 준비\n3. 임의경매 신청서 작성 (→ 서류 자동화 이용)\n4. 관할 법원 접수\n\n예상 소요 기간: 약 6~10개월\n법적 근거: 민사집행법 §264',
+    docType: 'auction'
   },
-
-  provisional: {
-    answer: `<b>가압류 즉시 신청을 권고합니다.</b> 재산 도피 우려가 있을 때 본안 소송 전이라도 가압류로 재산을 동결할 수 있습니다.<br><br>
-      <b>대상별 가능 여부</b><br>
-      · 예금채권 — 즉시 가능 (제3채무자: 은행)<br>
-      · 급여채권 — 최저생계비 제외 후 월 급여의 1/2까지<br>
-      · 부동산 — 등기부 가압류 등기 필요<br><br>
-      담보제공: 청구금액의 약 10%를 공탁 또는 보증보험증권으로 대체`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 1</span><span class="tool-title">급여 가압류 가능금액</span></div>
-        <div class="inline-calc">
-          <div class="calc-row"><span>월 급여</span><span>3,800,000원</span></div>
-          <div class="calc-row"><span>최저생계비 (4인 기준)</span><span>-1,850,000원</span></div>
-          <div class="calc-row"><span>가압류 가능액 (1/2)</span><span>975,000원</span></div>
-          <div class="calc-row total"><span>월 가압류 한도</span><span>975,000원</span></div>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 2</span><span class="tool-title">가압류 신청서 자동생성</span></div>
-        <div class="tool-sub">예금·급여·부동산 대상별 폼을 선택하면 자동 작성됩니다.</div>
-        <div class="tool-actions">
-          <button class="tool-btn primary" onclick="openForm('provisional_deposit')">예금 가압류</button>
-          <button class="tool-btn" onclick="openForm('provisional_salary')">급여 가압류</button>
-          <button class="tool-btn" onclick="openForm('provisional_realty')">부동산 가압류</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">근거 법령</span><span class="tool-title">민사집행법</span></div>
-        <div class="inline-law">
-          <div class="law-tag">민사집행법 제276조 (가압류의 목적)</div>
-          <div class="law-body">가압류는 금전채권의 집행을 보전하기 위해 채무자의 재산을 동결하는 보전처분이다.</div>
-        </div>
-        <div class="inline-law">
-          <div class="law-tag">민사집행법 제246조 (급여채권 압류 제한)</div>
-          <div class="law-body">월 급여의 1/2 상당액은 압류하지 못한다. 단, 국민기초생활보장법상 최저생계비는 전액 제외.</div>
-        </div>
-      </div>
-    `
+  garnishment: {
+    name: '채권 가압류',
+    steps: [
+      { bot: '어떤 채권을 가압류할 예정인가요?', options: ['예금채권', '임대차보증금', '급여채권', '보험금'] },
+      { bot: '채무자가 재산을 숨기거나 처분할 위험이 있나요?', options: ['예 (긴급)', '판단 어려움', '아니오'] },
+      { bot: '채권 원인은 무엇인가요?', options: ['대출 연체', '보증채무', '기타 금전채권'] }
+    ],
+    result: '가압류 신청 요건이 충족됩니다.\n\n✅ 절차:\n1. 가압류 신청서 작성\n2. 보증금 또는 공탁금 준비\n3. 관할 법원 접수 (채무자 주소지)\n4. 법원 결정 후 집행\n\n예상 기간: 결정까지 1~3일 (긴급 시)\n법적 근거: 민사집행법 §276',
+    docType: 'garnishment'
   },
-
-  payorder: {
-    answer: `<b>지급명령 신청이 가장 효율적입니다.</b> 무담보·소액 채권에 최적화된 절차로, 통상 1~2개월 안에 집행권원을 확보할 수 있습니다.<br><br>
-      <b>장점</b><br>
-      · 인지대 소액 (일반 소송의 1/10 수준)<br>
-      · 채무자 이의 없으면 30일 내 확정<br>
-      · 변론기일 없음 (서면 심사만)<br><br>
-      <b>주의</b>: 채무자가 이의신청 시 통상 소송으로 자동 이행됩니다.`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 1</span><span class="tool-title">인지대·송달료 계산</span></div>
-        <div class="inline-calc">
-          <div class="calc-row"><span>원금</span><span>8,000,000원</span></div>
-          <div class="calc-row"><span>인지대 (소송가 1/10)</span><span>4,000원</span></div>
-          <div class="calc-row"><span>송달료 (6회분)</span><span>30,600원</span></div>
-          <div class="calc-row total"><span>신청 비용</span><span>34,600원</span></div>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 2</span><span class="tool-title">지급명령 신청서 자동생성</span></div>
-        <div class="tool-actions">
-          <button class="tool-btn primary" onclick="openForm('payorder')">신청서 작성</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">근거 법령</span><span class="tool-title">민사소송법</span></div>
-        <div class="inline-law">
-          <div class="law-tag">민사소송법 제462조 (지급명령)</div>
-          <div class="law-body">금전·대체물·유가증권의 일정 수량의 지급을 목적으로 하는 청구에 대하여 채권자의 신청에 따라 지급명령을 할 수 있다.</div>
-        </div>
-      </div>
-    `
+  'payment-order': {
+    name: '지급명령',
+    steps: [
+      { bot: '청구금액이 얼마나 되나요?', options: ['1,000만원 미만', '1,000만~5,000만원', '5,000만원 이상'] },
+      { bot: '채무자의 주소를 알고 있나요?', options: ['예, 정확히 알고 있음', '주소 불명'] },
+      { bot: '채무 사실이 명백히 입증되나요?', options: ['예 (계약서, 통장 내역 있음)', '증거 보완 필요'] }
+    ],
+    result: '지급명령 신청이 적합합니다.\n\n✅ 절차:\n1. 지급명령 신청서 작성 (인지대 약 50%)\n2. 관할 법원 접수\n3. 채무자에게 송달\n4. 2주 내 이의 없으면 확정\n\n비용 절감: 소송 대비 인지대 50% 절감\n법적 근거: 민사소송법 §462',
+    docType: 'payment-order'
   },
-
-  collection: {
-    answer: `<b>채권추심명령 절차로 집행합니다.</b> 판결·지급명령 등 집행권원을 확보하셨다면 채무자의 재산을 특정해 추심할 수 있습니다.<br><br>
-      <b>순서</b><br>
-      ① 재산 조회 (법원 재산명시·명시명령) → ② 채권 압류·추심명령 신청 → ③ 제3채무자(은행) 송달 → ④ 추심 실행<br><br>
-      은행 계좌는 금융감독원 일괄조회 시스템으로 전 금융기관 조회 가능합니다.`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 1</span><span class="tool-title">재산조회 신청서</span></div>
-        <div class="tool-sub">은행·부동산·차량 일괄 조회 가능</div>
-        <div class="tool-actions">
-          <button class="tool-btn primary" onclick="openForm('property_search')">조회 신청</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 2</span><span class="tool-title">채권압류·추심명령 신청서</span></div>
-        <div class="tool-actions">
-          <button class="tool-btn primary" onclick="openForm('collection')">신청서 작성</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">근거 법령</span><span class="tool-title">민사집행법</span></div>
-        <div class="inline-law">
-          <div class="law-tag">민사집행법 제229조 (추심명령)</div>
-          <div class="law-body">채권자는 압류한 금전채권에 대하여 추심명령을 받아 제3채무자에게 추심할 수 있다.</div>
-        </div>
-      </div>
-    `
+  levy: {
+    name: '추심·전부명령',
+    steps: [
+      { bot: '이미 판결문이나 집행권원이 있나요?', options: ['예 (확정 판결 있음)', '가압류만 있음', '없음'] },
+      { bot: '추심할 채권 종류는?', options: ['은행 예금', '보험금·퇴직금', '임금 채권'] },
+      { bot: '채무자의 금융기관명을 알고 있나요?', options: ['예, 알고 있음', '조회 필요'] }
+    ],
+    result: '추심명령 신청이 가능합니다.\n\n✅ 절차:\n1. 채권압류 및 추심명령 신청서 작성\n2. 집행권원 첨부\n3. 관할 법원 접수\n4. 제3채무자(은행)에게 송달\n5. 추심 실행\n\n법적 근거: 민사집행법 §229',
+    docType: 'levy'
   },
-
-  notice: {
-    answer: `<b>기한이익 상실 내용증명을 먼저 발송합니다.</b> 법적 조치 전 반드시 거치는 1차 공식 통지이며, 이후 경매·지급명령 등의 근거가 됩니다.<br><br>
-      <b>필수 기재</b><br>
-      · 계약 특정 (대출일자·금액)<br>
-      · 연체 사실 및 기간<br>
-      · 기한이익 상실 통지 및 근거 조항<br>
-      · 일괄 변제 요구 (통상 7~14일 이내)<br><br>
-      발송 방법: 내용증명 우편 (우체국 전자내용증명 가능)`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구</span><span class="tool-title">내용증명 자동생성</span></div>
-        <div class="tool-sub">조합원 이름·계약번호·연체금액만 입력하면 AI가 작성합니다.</div>
-        <div class="tool-actions">
-          <button class="tool-btn primary" onclick="openForm('notice')">내용증명 작성</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">근거 법령</span><span class="tool-title">민법</span></div>
-        <div class="inline-law">
-          <div class="law-tag">민법 제544조 (이행지체와 해제)</div>
-          <div class="law-body">당사자 일방이 채무를 이행하지 아니하는 때에는 상대방은 상당한 기간을 정하여 이행을 최고하고, 그 기간 내에 이행하지 아니할 때에는 계약을 해제할 수 있다.</div>
-        </div>
-      </div>
-    `
+  'cert-mail': {
+    name: '내용증명',
+    steps: [
+      { bot: '내용증명 발송 목적은?', options: ['변제 촉구', '시효 중단', '계약 해지 통보', '담보 청구'] },
+      { bot: '채무자의 현재 주소를 알고 있나요?', options: ['예', '아니오 (주소 불명)'] },
+      { bot: '기한 내 미이행 시 후속 조치는?', options: ['법적 조치 예정', '협의 진행 예정'] }
+    ],
+    result: '내용증명 발송 요건이 확인됩니다.\n\n✅ 절차:\n1. 내용증명 작성 (3통: 발송용·수신용·우체국 보관용)\n2. 우체국 방문 또는 인터넷 우체국 발송\n3. 수신 확인 후 기록 보존\n\n⚠️ 내용증명 자체는 법적 강제력 없으나 증거 효력 있음\n시효 중단 효력: 발송일로부터 6개월 내 소제기 필요',
+    docType: 'cert-mail'
   },
-
   objection: {
-    answer: `<b>이의신청 접수 시 자동으로 본안 소송으로 전환됩니다.</b> 별도 소장 제출 없이 지급명령 신청서가 소장으로 간주됩니다.<br><br>
-      <b>행원 대응 순서</b><br>
-      ① 이의 사유 확인 (14일 내 송달) → ② 청구원인 보완 서면 작성 → ③ 변론기일 출석 → ④ 판결 확정 후 집행<br><br>
-      이의 사유가 단순 시간끌기인 경우 조정에 응하지 말고 변론으로 대응하는 것이 유리합니다.`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 1</span><span class="tool-title">청구원인 보완서면</span></div>
-        <div class="tool-actions">
-          <button class="tool-btn primary" onclick="openForm('supplement')">서면 작성</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">도구 2</span><span class="tool-title">증거 목록</span></div>
-        <div class="tool-sub">대출약정서·상환내역·내용증명을 자동 정리합니다.</div>
-        <div class="tool-actions">
-          <button class="tool-btn" onclick="addEvidence()">증거 목록 생성</button>
-        </div>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">근거 법령</span><span class="tool-title">민사소송법</span></div>
-        <div class="inline-law">
-          <div class="law-tag">민사소송법 제472조 (지급명령에 대한 이의신청)</div>
-          <div class="law-body">채무자가 지급명령을 송달받은 날부터 2주 이내에 이의신청을 한 때에는 그 범위 안에서 지급명령은 효력을 잃는다.</div>
-        </div>
-      </div>
-    `
-  },
-
-  calc_only: {
-    answer: `<b>채권 총액을 산출했습니다.</b>`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">채권 계산</span><span class="tool-title">회수 총액 산출</span></div>
-        <div class="inline-calc">
-          <div class="calc-row"><span>원금</span><span>30,000,000원</span></div>
-          <div class="calc-row"><span>약정이자 (연 4.5% · 18개월)</span><span>2,025,000원</span></div>
-          <div class="calc-row"><span>지연손해금 (연 15% · 18개월)</span><span>6,750,000원</span></div>
-          <div class="calc-row total"><span>회수 총액</span><span>38,775,000원</span></div>
-        </div>
-        <div class="tool-actions mt-8">
-          <button class="tool-btn ghost" onclick="openFormCalc()">수치 수정하기</button>
-        </div>
-      </div>
-    `
-  },
-
-  law_only: {
-    answer: `<b>담보 실행 관련 주요 조문입니다.</b>`,
-    tools: `
-      <div class="tool-card">
-        <div class="tool-head"><span class="tool-tag">법령 참조</span><span class="tool-title">담보 실행 · 경매</span></div>
-        <div class="inline-law">
-          <div class="law-tag">민사집행법 제264조 (부동산에 대한 강제집행)</div>
-          <div class="law-body">담보권 실행을 위한 경매 신청권 규정.</div>
-        </div>
-        <div class="inline-law">
-          <div class="law-tag">민사집행법 제268조 (경매개시결정)</div>
-          <div class="law-body">경매 신청이 이유 있다고 인정되면 법원은 경매개시결정을 한다.</div>
-        </div>
-        <div class="inline-law">
-          <div class="law-tag">민법 제357조 (근저당)</div>
-          <div class="law-body">계속적 거래관계에서 장래 발생할 채권의 담보로 부동산을 저당할 수 있다.</div>
-        </div>
-      </div>
-    `
-  },
+    name: '이의신청',
+    steps: [
+      { bot: '어떤 이의신청인가요?', options: ['지급명령에 대한 이의', '경매 이의', '압류 이의'] },
+      { bot: '이의신청 기간 내입니까?', options: ['예 (2주 이내)', '기간 경과 (재심 검토 필요)'] },
+      { bot: '이의 사유는?', options: ['채권 부존재', '변제 완료', '이미 소멸시효 완성', '절차 하자'] }
+    ],
+    result: '이의신청 요건이 검토되었습니다.\n\n✅ 절차:\n1. 이의신청서 작성 (이의 사유 명시)\n2. 관련 증빙서류 첨부\n3. 관할 법원 접수\n4. 이의 수리 시 소송 절차로 전환\n\n⚠️ 지급명령 이의: 송달일로부터 2주 이내 필수\n법적 근거: 민사소송법 §470',
+    docType: 'objection'
+  }
 };
 
-// ═══ 서류 생성 오버레이 ═══
-const FORM_SPECS = {
-  auction: {
-    title: '임의경매 신청서 생성',
-    sub: '채무자 정보를 확인하세요. 채권 내역은 앞서 계산된 값으로 자동 반영됩니다.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'홍길동' },
-      { name:'addr', label:'채무자 주소', type:'text', value:'서울 강남구 역삼로 12' },
-      { name:'property', label:'담보 부동산', type:'text', value:'서울 강남구 테헤란로 아파트 201호' },
-      { name:'amount', label:'청구금액(원)', type:'text', value:'56,281,000' },
-    ],
-    render: (v) => `┌────────────────────────────────┐
-│     부동산 임의경매 신청서        │
-└────────────────────────────────┘
+let chatState = { caseKey: null, step: 0, answers: [] };
 
-채  권  자: ${state.inst} (${state.user})
-채  무  자: ${v.debtor}
-          ${v.addr}
-담보부동산: ${v.property}
-청구 금액: ${v.amount}원
-
-민사집행법 제264조에 의거, 위 채권 회수를 위해
-담보부동산에 대한 임의경매를 신청합니다.
-
-청구 원인:
-  1. 채무자는 신청인으로부터 금원을 차용함
-  2. 채무자가 약정기한 도과 후 연체 6개월째 미변제
-  3. 기한이익 상실 통지 이미 발송 완료
-  4. 담보권(근저당) 실행을 위한 경매가 필요함
-
-첨부서류: 대출약정서, 근저당권설정계약서, 등기부등본,
-         내용증명, 채권계산서
-
-신청일자: 2026. 04. 23.
-신  청  인: ${state.inst}  (인)
-
-── 서울중앙지방법원 귀중 ──`
-  },
-  notice_auction: {
-    title: '경매 전 내용증명 작성',
-    sub: '임의경매 신청 전 필수 발송되는 기한이익 상실 통지서입니다.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'홍길동' },
-      { name:'addr', label:'주소', type:'text', value:'서울 강남구 역삼로 12' },
-      { name:'amount', label:'연체금액(원)', type:'text', value:'5,200,000' },
-      { name:'deadline', label:'변제 기한', type:'text', value:'2026. 05. 07.' },
-    ],
-    render: (v) => `━━━━━━━━━ 내용증명 ━━━━━━━━━
-
-수신: ${v.debtor} 귀하 (${v.addr})
-발신: ${state.inst}
-제목: 기한의 이익 상실 통지 및 일괄 변제 요구
-
-1. 귀하께서는 당 조합으로부터 대출받은 금원에 대하여
-   연체 ${v.amount}원이 발생하였습니다.
-
-2. 민법 제388조에 의거 귀하는 기한의 이익을 상실하였으며,
-   당 조합은 대출금 전액의 즉시 변제를 요구하는 바입니다.
-
-3. ${v.deadline}까지 전액 변제하지 않는 경우
-   근저당권 실행을 통한 임의경매를 신청할 것임을 통지합니다.
-
-2026. 04. 23.
-${state.inst}  (인)`
-  },
-  provisional_deposit: {
-    title: '예금채권 가압류 신청서',
-    sub: '제3채무자(은행) 정보를 입력하세요.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'이영수' },
-      { name:'bank', label:'제3채무자(은행)', type:'text', value:'국민은행' },
-      { name:'amount', label:'가압류 청구액(원)', type:'text', value:'32,000,000' },
-    ],
-    render: (v) => `┌──────── 예금채권 가압류 신청서 ────────┐
-
-채권자: ${state.inst}
-채무자: ${v.debtor}
-제3채무자: ${v.bank}
-청구금액: ${v.amount}원
-
-신청 취지:
-채무자가 제3채무자에 대하여 가지는 예금채권 중
-금 ${v.amount}원에 이르기까지 가압류한다.
-
-신청 원인:
-본안 소송 전 채무자의 재산 도피 방지를 위함.
-
-민사집행법 제276조에 의거 신청합니다.
-
-2026. 04. 23.
-${state.inst}  (인)`
-  },
-  provisional_salary: {
-    title: '급여채권 가압류 신청서',
-    sub: '급여 지급자 정보를 입력하세요. 가압류 한도는 자동 산정됩니다.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'이영수' },
-      { name:'employer', label:'급여지급자(직장)', type:'text', value:'○○주식회사' },
-      { name:'salary', label:'월 급여(원)', type:'text', value:'3,800,000' },
-    ],
-    render: (v) => `┌──────── 급여채권 가압류 신청서 ────────┐
-
-채권자: ${state.inst}
-채무자: ${v.debtor}
-제3채무자: ${v.employer}
-
-신청 취지:
-채무자가 제3채무자로부터 매월 지급받는 급여 중
-최저생계비 및 1/2 상당액을 제외한 부분에 대하여
-가압류한다.
-
-근거: 민사집행법 제246조, 제276조
-
-2026. 04. 23.
-${state.inst}  (인)`
-  },
-  provisional_realty: {
-    title: '부동산 가압류 신청서',
-    sub: '대상 부동산 정보를 입력하세요.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'이영수' },
-      { name:'property', label:'부동산 소재지', type:'text', value:'서울 송파구 잠실동 123 101호' },
-      { name:'amount', label:'청구금액(원)', type:'text', value:'50,000,000' },
-    ],
-    render: (v) => `부동산 가압류 신청서
-
-채권자: ${state.inst}
-채무자: ${v.debtor}
-대상 부동산: ${v.property}
-청구금액: ${v.amount}원
-
-민사집행법 제276조에 의거 신청합니다.
-
-2026. 04. 23.  ${state.inst} (인)`
-  },
-  payorder: {
-    title: '지급명령 신청서',
-    sub: '무담보 소액 채권용. 인지대·송달료는 자동 계산됩니다.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'이순자' },
-      { name:'addr', label:'주소', type:'text', value:'서울 관악구 봉천로 45' },
-      { name:'amount', label:'청구금액(원)', type:'text', value:'8,000,000' },
-    ],
-    render: (v) => `┌──────── 지급명령 신청서 ────────┐
-
-채권자: ${state.inst}
-채무자: ${v.debtor} (${v.addr})
-청구금액: ${v.amount}원
-
-청구 취지:
-채무자는 채권자에게 금 ${v.amount}원 및
-이에 대한 지연손해금을 지급하라.
-
-청구 원인:
-1. 대출약정 체결
-2. 약정기한 도과 후 미변제
-3. 내용증명 발송에도 불변제
-
-민사소송법 제462조에 의거 지급명령을 신청합니다.
-
-2026. 04. 23.
-${state.inst}  (인)`
-  },
-  collection: {
-    title: '채권압류·추심명령 신청서',
-    sub: '집행권원(판결·지급명령)이 이미 확보된 건에 사용합니다.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'서경식' },
-      { name:'bank', label:'제3채무자', type:'text', value:'신한은행' },
-      { name:'amount', label:'청구액(원)', type:'text', value:'12,500,000' },
-    ],
-    render: (v) => `채권압류 및 추심명령 신청서
-
-채권자: ${state.inst}
-채무자: ${v.debtor}
-제3채무자: ${v.bank}
-청구금액: ${v.amount}원
-
-집행권원: 확정된 지급명령(또는 판결)
-
-신청 취지:
-채무자가 제3채무자에 대해 가지는 예금채권을
-압류하고, 채권자가 이를 추심한다.
-
-근거: 민사집행법 제229조
-
-2026. 04. 23.  ${state.inst} (인)`
-  },
-  notice: {
-    title: '기한이익 상실 내용증명',
-    sub: '1차 공식 통지. 이후 법적 절차의 근거가 됩니다.',
-    fields: [
-      { name:'debtor', label:'조합원 성명', type:'text', value:'최민호' },
-      { name:'addr', label:'주소', type:'text', value:'서울 영등포구 여의대로 17' },
-      { name:'contract', label:'계약번호', type:'text', value:'2024-LN-0421' },
-      { name:'amount', label:'연체액(원)', type:'text', value:'3,400,000' },
-    ],
-    render: (v) => `━━━━━━━━━ 내용증명 ━━━━━━━━━
-
-수신: ${v.debtor} 귀하 (${v.addr})
-발신: ${state.inst}
-제목: 기한의 이익 상실 통지 및 일괄 변제 요구
-
-1. 계약번호 ${v.contract} 관련 연체금 ${v.amount}원이 발생하였습니다.
-
-2. 민법 제388조 및 대출약정서에 의거
-   귀하는 기한의 이익을 상실하였으며,
-   당 조합은 대출금 전액의 즉시 변제를 요구합니다.
-
-3. 본 통지 수령일로부터 7일 이내 변제하지 않을 경우
-   지급명령·가압류·경매 등 법적 조치에 착수함을 고지합니다.
-
-2026. 04. 23.
-${state.inst}  (인)`
-  },
-  supplement: {
-    title: '청구원인 보완 서면',
-    sub: '지급명령 이의 후 본안소송 대응용.',
-    fields: [
-      { name:'debtor', label:'피고(채무자)', type:'text', value:'김수진' },
-      { name:'amount', label:'청구금액(원)', type:'text', value:'15,000,000' },
-      { name:'reason', label:'이의 사유 요지', type:'textarea', value:'원금을 받은 바 없다고 주장' },
-    ],
-    render: (v) => `청구원인 보완 서면
-
-사건: 2026가단1234 대여금
-원고: ${state.inst}
-피고: ${v.debtor}
-
-보완 사유:
-피고는 이의신청에서 "${v.reason}"라고 주장하나,
-원고가 제출하는 증거에 의하면 그 주장은 사실과 다릅니다.
-
-입증 방법:
-1. 대출약정서 (갑 제1호증)
-2. 계좌이체 내역 (갑 제2호증)
-3. 피고 자필 차용증 (갑 제3호증)
-4. 이전 상환 이력 (갑 제4호증)
-
-청구금액: ${v.amount}원
-
-2026. 04. 23.  원고 대리인 ${state.inst}`
-  },
-  property_search: {
-    title: '재산조회 신청서',
-    sub: '법원에 재산명시 후 조회 요청하는 절차입니다.',
-    fields: [
-      { name:'debtor', label:'채무자 성명', type:'text', value:'서경식' },
-      { name:'scope', label:'조회 범위', type:'text', value:'전 금융기관 예금·부동산·자동차' },
-    ],
-    render: (v) => `재산조회 신청서
-
-채권자: ${state.inst}
-채무자: ${v.debtor}
-
-집행권원: 확정 지급명령
-조회 범위: ${v.scope}
-
-민사집행법 제74조에 의거 법원에 재산조회를 신청합니다.
-
-2026. 04. 23.  ${state.inst} (인)`
-  },
-};
-
-function openForm(key){
-  const spec = FORM_SPECS[key];
-  if(!spec) return;
-  document.getElementById('form-title').textContent = spec.title;
-  document.getElementById('form-sub').textContent = spec.sub;
-  const body = document.getElementById('form-body');
-  body.innerHTML = '';
-  spec.fields.forEach(f => {
-    const div = document.createElement('div');
-    div.className = 'form-field';
-    div.innerHTML = f.type === 'textarea'
-      ? `<label>${f.label}</label><textarea data-name="${f.name}">${f.value || ''}</textarea>`
-      : `<label>${f.label}</label><input data-name="${f.name}" type="${f.type}" value="${(f.value||'').replace(/"/g,'&quot;')}" />`;
-    body.appendChild(div);
-  });
-  document.getElementById('form-submit').onclick = () => submitForm(key);
-  document.getElementById('form-overlay').classList.add('show');
-}
-function closeForm(){
-  document.getElementById('form-overlay').classList.remove('show');
-}
-function submitForm(key){
-  const spec = FORM_SPECS[key];
-  const vals = {};
-  document.querySelectorAll('#form-body [data-name]').forEach(el => vals[el.dataset.name] = el.value);
-  closeForm();
-
-  const loading = addBot('<span class="gen-spin">◐</span> AI가 ' + spec.title.replace(' 생성','').replace(' 작성','') + '를 작성 중입니다...');
-  setTimeout(()=>{
-    loading.remove();
-    const doc = spec.render(vals);
-    addBot(
-      `<b>${spec.title.replace(' 생성','').replace(' 작성','')}</b> 작성이 완료되었습니다.`,
-      { tools: `
-        <div class="tool-card">
-          <div class="tool-head"><span class="tool-tag">완성</span><span class="tool-title">${spec.title.replace(' 생성','').replace(' 작성','')}</span></div>
-          <div class="inline-doc">${escape(doc)}</div>
-          <div class="tool-actions mt-8">
-            <button class="tool-btn primary" onclick="downloadDoc(this)" data-doc="${encodeURIComponent(doc)}" data-name="${escape(spec.title)}.txt">다운로드</button>
-            <button class="tool-btn ghost" onclick="copyDoc(this)" data-doc="${encodeURIComponent(doc)}">클립보드 복사</button>
-            <button class="tool-btn ghost" onclick="openForm('${key}')">재작성</button>
-          </div>
-        </div>
-      ` }
-    );
-  }, 1000);
+function startCase(key) {
+  chatState = { caseKey: key, step: 0, answers: [] };
+  const c = CASES[key];
+  document.getElementById('init-btns')?.remove();
+  addBotMsg('알겠습니다. <b>' + c.name + '</b> 절차를 안내해드리겠습니다.');
+  setTimeout(() => askStep(), 600);
 }
 
-function openFormCalc(){
-  document.getElementById('form-title').textContent = '채권 계산 재산정';
-  document.getElementById('form-sub').textContent = '수치를 직접 조정하세요.';
-  const body = document.getElementById('form-body');
-  body.innerHTML = `
-    <div class="form-field"><label>원금 (원)</label><input id="c-principal" value="50000000"/></div>
-    <div class="form-row">
-      <div class="form-field"><label>약정이자율 (%)</label><input id="c-rate" value="4.5"/></div>
-      <div class="form-field"><label>약정기간 (개월)</label><input id="c-months" value="12"/></div>
+function askStep() {
+  const c = CASES[chatState.caseKey];
+  if (chatState.step >= c.steps.length) {
+    showResult();
+    return;
+  }
+  const s = c.steps[chatState.step];
+  const btnHtml = s.options.map(o =>
+    `<button class="decision-btn" onclick="answerStep('${o.replace(/'/g,"\\'")}')">→ ${o}</button>`
+  ).join('');
+  addBotMsg(s.bot + `<div class="decision-btns">${btnHtml}</div>`);
+}
+
+function answerStep(ans) {
+  chatState.answers.push(ans);
+  addUserMsg(ans);
+  chatState.step++;
+  setTimeout(() => askStep(), 500);
+}
+
+function showResult() {
+  const c = CASES[chatState.caseKey];
+  const resultHtml = c.result.replace(/\n/g, '<br>');
+  addBotMsg('분석이 완료되었습니다.<br><br>' + resultHtml +
+    `<div class="decision-btns" style="margin-top:12px">
+      <button class="decision-btn" onclick="goDocFromChat('${chatState.caseKey}')">📄 서류 자동 생성 →</button>
+      <button class="decision-btn" onclick="resetChat()">↩ 처음으로</button>
+    </div>`);
+  saveHistory(chatState.caseKey, c.name, chatState.answers);
+}
+
+function goDocFromChat(key) {
+  goPage('docs');
+  setTimeout(() => openDocForm(key), 100);
+}
+
+function resetChat() {
+  chatState = { caseKey: null, step: 0, answers: [] };
+  const msgs = document.getElementById('chat-messages');
+  msgs.innerHTML = `<div class="msg bot">
+    <div class="msg-avatar">AI</div>
+    <div class="msg-bubble">
+      안녕하세요. 여신 업무 AI 어시스턴트입니다.<br><br>
+      어떤 상황인지 선택하시거나, 직접 입력해주세요.
+      <div class="decision-btns" id="init-btns">
+        <button class="decision-btn" onclick="startCase('auction')">📋 임의경매 신청</button>
+        <button class="decision-btn" onclick="startCase('garnishment')">🔒 채권 가압류</button>
+        <button class="decision-btn" onclick="startCase('payment-order')">📝 지급명령 신청</button>
+        <button class="decision-btn" onclick="startCase('levy')">⚡ 추심·전부명령</button>
+        <button class="decision-btn" onclick="startCase('cert-mail')">📮 내용증명 발송</button>
+        <button class="decision-btn" onclick="startCase('objection')">🛡️ 이의신청서</button>
+      </div>
     </div>
-    <div class="form-row">
-      <div class="form-field"><label>지연이자율 (%)</label><input id="c-delay-rate" value="15"/></div>
-      <div class="form-field"><label>연체기간 (개월)</label><input id="c-delay-months" value="6"/></div>
-    </div>
+  </div>`;
+}
+
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addUserMsg(text);
+  const kw = text;
+  let matched = null;
+  if (/경매|담보/.test(kw)) matched = 'auction';
+  else if (/가압류|예금/.test(kw)) matched = 'garnishment';
+  else if (/지급명령|소액/.test(kw)) matched = 'payment-order';
+  else if (/추심|전부명령/.test(kw)) matched = 'levy';
+  else if (/내용증명/.test(kw)) matched = 'cert-mail';
+  else if (/이의/.test(kw)) matched = 'objection';
+
+  if (matched) {
+    setTimeout(() => startCase(matched), 400);
+  } else {
+    setTimeout(() => addBotMsg('입력 내용을 분석 중입니다...<br><br>아래 케이스 중 해당하는 항목을 선택해주세요.' +
+      `<div class="decision-btns">
+        <button class="decision-btn" onclick="startCase('auction')">📋 임의경매</button>
+        <button class="decision-btn" onclick="startCase('garnishment')">🔒 채권 가압류</button>
+        <button class="decision-btn" onclick="startCase('payment-order')">📝 지급명령</button>
+      </div>`), 600);
+  }
+}
+
+function addBotMsg(html) {
+  const msgs = document.getElementById('chat-messages');
+  const el = document.createElement('div');
+  el.className = 'msg bot';
+  el.innerHTML = `<div class="msg-avatar">AI</div><div class="msg-bubble">${html}</div>`;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function addUserMsg(text) {
+  const msgs = document.getElementById('chat-messages');
+  const el = document.createElement('div');
+  el.className = 'msg user';
+  el.innerHTML = `<div class="msg-avatar">나</div><div class="msg-bubble">${text}</div>`;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ════ 서류 카탈로그 ════
+const DOCS = [
+  { id:'auction', num:'01', name:'임의경매 신청서', desc:'담보부 채권 회수를 위한 경매 개시 신청', time:'약 5분' },
+  { id:'garnishment', num:'02', name:'채권 가압류 신청서', desc:'채무자 예금·보험금 등 채권 보전', time:'약 4분' },
+  { id:'payment-order', num:'03', name:'지급명령 신청서', desc:'판결 없이 빠른 집행권원 취득', time:'약 3분' },
+  { id:'levy', num:'04', name:'추심·전부명령 신청서', desc:'압류 후 채권 추심 또는 이전', time:'약 4분' },
+  { id:'cert-mail', num:'05', name:'내용증명', desc:'변제 촉구 및 시효 중단용 통지', time:'약 3분' },
+  { id:'auction-comp', num:'06', name:'강제경매 신청서', desc:'판결에 기반한 부동산 강제집행', time:'약 5분' },
+  { id:'objection', num:'07', name:'이의신청서', desc:'지급명령·경매·압류 이의', time:'약 3분' },
+  { id:'refund', num:'08', name:'출자금반환 청구서', desc:'조합원 탈퇴 시 출자금 반환 청구', time:'약 3분' },
+];
+
+function renderDocCatalog() {
+  const grid = document.getElementById('doc-grid');
+  if (!grid) return;
+  grid.innerHTML = DOCS.map(d =>
+    `<div class="doc-card" onclick="openDocForm('${d.id}')">
+      <div class="doc-num">${d.num}</div>
+      <div class="doc-name">${d.name}</div>
+      <div class="doc-desc">${d.desc}</div>
+      <div class="doc-time">예상 소요 ${d.time}</div>
+    </div>`
+  ).join('');
+}
+
+function openDocForm(id) {
+  state.currentDoc = DOCS.find(d => d.id === id) || DOCS[0];
+  document.getElementById('doc-catalog').classList.add('hidden');
+  document.getElementById('doc-form').classList.remove('hidden');
+  document.getElementById('doc-form-title').textContent = state.currentDoc.name;
+  const collateral = document.getElementById('collateral-section');
+  if (id === 'auction' || id === 'auction-comp') {
+    collateral.classList.remove('hidden');
+  } else {
+    collateral.classList.add('hidden');
+  }
+  document.getElementById('progress-fill').style.width = '30%';
+}
+
+function backToCatalog() {
+  document.getElementById('doc-catalog').classList.remove('hidden');
+  document.getElementById('doc-form').classList.add('hidden');
+}
+
+function generateDoc() {
+  const overlay = document.getElementById('doc-overlay');
+  overlay.classList.add('show');
+  const progress = document.getElementById('gen-progress');
+  let pct = 0;
+  const iv = setInterval(() => {
+    pct += Math.random() * 15 + 5;
+    if (pct >= 100) { pct = 100; clearInterval(iv); showDocResult(); }
+    progress.style.width = pct + '%';
+  }, 200);
+}
+
+function showDocResult() {
+  const doc = state.currentDoc;
+  const debtor = document.getElementById('f-debtor-name')?.value || '홍길동';
+  const principal = Number(document.getElementById('f-principal')?.value || 50000000).toLocaleString();
+  const today = new Date().toLocaleDateString('ko-KR');
+  const templates = {
+    auction: `임 의 경 매 신 청 서\n\n채 권 자: ${state.user?.inst || '서울중앙신협'}\n채 무 자: ${debtor}\n\n청 구 채 권 의 표 시\n원    금: 금 ${principal}원\n이    자: 약정이율에 따른 이자\n\n담 보 권 의 표 시\n별지 목록 기재 부동산에 대한 근저당권\n\n신청 취지\n별지 목록 기재 부동산에 대하여 임의경매 개시 결정을 구합니다.\n\n${today}\n신 청 인 ${state.user?.inst || '서울중앙신협'} (인)`,
+    garnishment: `채권가압류신청서\n\n채 권 자: ${state.user?.inst || '서울중앙신협'}\n채 무 자: ${debtor}\n제3채무자: ○○은행\n\n청구채권: 대출원리금 합계 금 ${principal}원\n\n가압류할 채권\n채무자가 제3채무자에 대하여 가지는 예금채권\n\n${today}\n채 권 자 ${state.user?.inst || '서울중앙신협'}`,
+    'payment-order': `지 급 명 령 신 청 서\n\n채 권 자: ${state.user?.inst || '서울중앙신협'}\n채 무 자: ${debtor}\n\n청구취지\n피신청인은 신청인에게 금 ${principal}원 및 이에 대한 이자를 지급하라는 지급명령을 구합니다.\n\n청구원인\n피신청인은 신청인과의 대출계약에 의하여 금 ${principal}원을 차용하였으나 이를 변제하지 아니하고 있습니다.\n\n${today}\n채 권 자 ${state.user?.inst || '서울중앙신협'}`
+  };
+  const preview = templates[doc?.id] || `${doc?.name}\n\n채 권 자: ${state.user?.inst || '서울중앙신협'}\n채 무 자: ${debtor}\n청 구 금 액: 금 ${principal}원\n\n작성일: ${today}\n법무법인 더 에이치 황해 검토`;
+  document.getElementById('overlay-inner').innerHTML = `
+    <div class="overlay-icon">✅</div>
+    <div class="overlay-title">${doc?.name} 생성 완료</div>
+    <div class="overlay-body">서류 초안이 생성되었습니다. 법무법인 더 에이치 황해 검토 후 최종 제출하세요.</div>
+    <div class="overlay-preview">${preview}</div>
+    <button class="btn-outline" onclick="closeOverlay()">닫기</button>
+    <button class="btn-primary" style="display:inline-block;width:auto;padding:10px 24px" onclick="closeOverlay()">저장 (데모)</button>
   `;
-  document.getElementById('form-submit').onclick = () => runCalc();
-  document.getElementById('form-overlay').classList.add('show');
-}
-function runCalc(){
-  const p = parseFloat(document.getElementById('c-principal').value) || 0;
-  const r = parseFloat(document.getElementById('c-rate').value) || 0;
-  const m = parseFloat(document.getElementById('c-months').value) || 0;
-  const dr = parseFloat(document.getElementById('c-delay-rate').value) || 0;
-  const dm = parseFloat(document.getElementById('c-delay-months').value) || 0;
-  const interest = Math.round(p * r / 100 * m / 12);
-  const delay = Math.round(p * dr / 100 * dm / 12);
-  const stamp = p < 10000000 ? 5000 : Math.round(p * 0.0045);
-  const post = 51000;
-  const total = p + interest + delay + stamp + post;
-  closeForm();
-  addBot('재계산 완료입니다.', { tools: `
-    <div class="tool-card">
-      <div class="tool-head"><span class="tool-tag">재계산</span><span class="tool-title">채권 총액</span></div>
-      <div class="inline-calc">
-        <div class="calc-row"><span>원금</span><span>${num(p)}원</span></div>
-        <div class="calc-row"><span>약정이자 (${r}% · ${m}개월)</span><span>${num(interest)}원</span></div>
-        <div class="calc-row"><span>지연손해금 (${dr}% · ${dm}개월)</span><span>${num(delay)}원</span></div>
-        <div class="calc-row"><span>인지대</span><span>${num(stamp)}원</span></div>
-        <div class="calc-row"><span>송달료</span><span>${num(post)}원</span></div>
-        <div class="calc-row total"><span>청구 총액</span><span>${num(total)}원</span></div>
-      </div>
-    </div>
-  `});
+  saveHistory(doc?.id || 'other', doc?.name || '서류', []);
 }
 
-function addEvidence(){
-  addBot('증거 목록을 정리했습니다.', { tools: `
-    <div class="tool-card">
-      <div class="tool-head"><span class="tool-tag">증거 목록</span><span class="tool-title">제출 준비 완료</span></div>
-      <div class="inline-doc">갑 제1호증   대출약정서 (2024. 03. 12.)
-갑 제2호증   계좌이체 확인서 (3,000만원 입금)
-갑 제3호증   상환 내역표 (2024.04~2025.09 정상 · 이후 연체)
-갑 제4호증   내용증명 반송 영수증
-갑 제5호증   피고 본인 확인 필체 (차용증)</div>
-      <div class="tool-actions mt-8">
-        <button class="tool-btn primary">증거 목록 다운로드</button>
-      </div>
-    </div>
-  `});
+function closeOverlay() {
+  document.getElementById('doc-overlay').classList.remove('show');
+  document.getElementById('gen-progress').style.width = '0%';
+  document.getElementById('overlay-inner').innerHTML = `<div class="generating-anim"><div class="spin">⚙️</div><div style="font-size:14px;color:#555">서류 생성 중...</div><div class="progress-bar mt-16" style="max-width:200px;margin:16px auto 0"><div class="progress-fill" id="gen-progress" style="width:0%"></div></div></div>`;
 }
 
-function downloadDoc(btn){
-  const doc = decodeURIComponent(btn.dataset.doc);
-  const name = btn.dataset.name || 'doc.txt';
-  const blob = new Blob([doc], { type:'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = name; a.click();
-  URL.revokeObjectURL(url);
+// ════ 채권계산기 ════
+function calcDebt() {
+  const p = Number(document.getElementById('calc-principal')?.value || 0);
+  const r = Number(document.getElementById('calc-rate')?.value || 0);
+  const days = Number(document.getElementById('calc-days')?.value || 0);
+  const dd = Number(document.getElementById('calc-delay-days')?.value || 0);
+  const dr = Number(document.getElementById('calc-delay-rate')?.value || 12);
+  const claim = Number(document.getElementById('calc-claim')?.value || 0) || (p + calcInterest(p, r, days));
+  const deliveryRounds = Number(document.getElementById('calc-delivery')?.value || 3);
+
+  const interest = calcInterest(p, r, days);
+  const delay = Math.round(p * (dr / 100) * dd / 365);
+  const stamp = calcStamp(claim);
+  const delivery = deliveryRounds * 5200;
+  const total = p + interest + delay + stamp + delivery;
+
+  const fmt = n => n.toLocaleString() + '원';
+  document.getElementById('r-principal').textContent = fmt(p);
+  document.getElementById('r-interest').textContent = fmt(interest);
+  document.getElementById('r-delay').textContent = fmt(delay);
+  document.getElementById('r-stamp').textContent = fmt(stamp);
+  document.getElementById('r-delivery').textContent = fmt(delivery);
+  document.getElementById('r-total').textContent = fmt(total);
 }
-function copyDoc(btn){
-  const doc = decodeURIComponent(btn.dataset.doc);
-  navigator.clipboard.writeText(doc).then(()=>{
-    const old = btn.textContent;
-    btn.textContent = '복사됨 ✓';
-    setTimeout(()=>btn.textContent = old, 1500);
+
+function calcInterest(p, r, days) {
+  return Math.round(p * (r / 100) * days / 365);
+}
+
+function calcStamp(claim) {
+  // 민사소송 인지법 기준 (간략화)
+  if (claim <= 1000000) return 1000;
+  if (claim <= 10000000) return Math.floor(claim * 0.005 / 100) * 100;
+  if (claim <= 100000000) return Math.floor(claim * 0.0045 / 100) * 100 + 5000;
+  if (claim <= 1000000000) return Math.floor(claim * 0.004 / 100) * 100 + 55000;
+  return Math.floor(claim * 0.0035 / 100) * 100 + 455000;
+}
+
+// ════ 법령 검색 ════
+const REG_DB = [
+  { tag:'신협법', title:'신협법 §79 — 임의경매 신청', body:'담보권자인 조합은 채무 불이행 시 임의경매를 신청할 수 있다.', kw:['경매','신협','담보'] },
+  { tag:'민사집행법', title:'민사집행법 §276 — 채권 가압류', body:'금전채권 보전을 위해 채무자의 제3자 채권을 가압류할 수 있다.', kw:['가압류','보전','채권'] },
+  { tag:'소송촉진법', title:'소송촉진법 §3① — 지연손해금 연 12%', body:'판결 선고 이후 지연손해금 법정이율 연 12% 적용.', kw:['지연','손해금','이율','12'] },
+  { tag:'농협법', title:'농협법 §72 — 조합 여신 범위', body:'단위농협의 조합원 대출 및 어음할인 근거 조항.', kw:['농협','여신','대출'] },
+  { tag:'새마을금고법', title:'새마을금고법 §25 — 공제 및 여신', body:'새마을금고의 대출, 어음할인, 지급보증에 관한 규정.', kw:['새마을','금고','공제'] },
+  { tag:'민법', title:'민법 §379 — 법정이율 연 5%', body:'이자 없는 채권의 법정이율은 연 5%로 한다.', kw:['민법','이율','5%','법정'] },
+  { tag:'민사집행법', title:'민사집행법 §229 — 추심명령', body:'압류채권자는 추심명령으로 직접 채권을 추심할 수 있다.', kw:['추심','압류','명령'] },
+  { tag:'민사소송법', title:'민사소송법 §462 — 지급명령', body:'채권자는 금전 지급을 목적으로 지급명령을 신청할 수 있다.', kw:['지급명령','채무','소송'] },
+];
+
+function searchReg() {
+  const q = document.getElementById('reg-input').value.toLowerCase();
+  const results = q ? REG_DB.filter(r => r.kw.some(k => q.includes(k)) || r.title.includes(q) || r.body.includes(q)) : REG_DB.slice(0, 4);
+  const container = document.getElementById('reg-results');
+  if (results.length === 0) {
+    container.innerHTML = '<div class="text-muted" style="padding:20px">검색 결과가 없습니다. 다른 키워드로 시도해보세요.</div>';
+    return;
+  }
+  container.innerHTML = results.map(r =>
+    `<div class="search-result">
+      <div class="result-tag">${r.tag}</div>
+      <div class="result-title">${r.title}</div>
+      <div class="result-body">${r.body}</div>
+    </div>`
+  ).join('');
+}
+
+// ════ 상담 내역 ════
+function saveHistory(caseKey, caseName, answers) {
+  const item = {
+    id: Date.now().toString(),
+    date: new Date().toLocaleDateString('ko-KR', { month:'2-digit', day:'2-digit' }),
+    caseKey,
+    caseName,
+    status: '완료',
+    answers
+  };
+  state.history.unshift(item);
+  if (state.history.length > 50) state.history.pop();
+  localStorage.setItem('bc_teller_history', JSON.stringify(state.history));
+  updateHistoryCount();
+}
+
+function renderHistory(filter) {
+  updateHistoryCount();
+  const list = document.getElementById('history-list');
+  if (!list) return;
+  let items = state.history;
+  if (filter === 'auction') items = items.filter(h => h.caseKey === 'auction' || h.caseKey === 'auction-comp');
+  else if (filter === 'garnishment') items = items.filter(h => h.caseKey === 'garnishment');
+  else if (filter === 'other') items = items.filter(h => !['auction','auction-comp','garnishment'].includes(h.caseKey));
+
+  if (items.length === 0) {
+    const allEmpty = state.history.length === 0;
+    list.innerHTML = `<div style="text-align:center;padding:60px 0;color:#999">
+      <div style="font-size:24px;margin-bottom:12px">○</div>
+      <div>${allEmpty ? '상담 내역이 없습니다. 첫 상담을 시작해보세요.' : '해당 카테고리 내역이 없습니다.'}</div>
+    </div>`;
+    return;
+  }
+  list.innerHTML = items.map(h =>
+    `<div class="history-row">
+      <div class="history-date">${h.date}</div>
+      <div class="history-badge">${h.caseName || h.caseKey}</div>
+      <div class="history-title">${state.user?.name || ''} — ${h.caseName || '법률 상담'}</div>
+      <div class="history-status">${h.status}</div>
+    </div>`
+  ).join('');
+}
+
+function updateHistoryCount() {
+  const el = document.getElementById('history-count');
+  if (el) el.textContent = state.history.length + '건';
+}
+
+function switchTab(type) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['all','auction','garnishment','other'][i] === type);
   });
+  renderHistory(type === 'all' ? null : type);
 }
 
-function exportChat(){
-  const msgs = [...document.querySelectorAll('.msg')].map(m => {
-    const role = m.classList.contains('bot') ? 'AI' : state.user;
-    const t = m.querySelector('.msg-bubble').innerText;
-    return `[${role}] ${t}`;
-  }).join('\n\n────────\n\n');
-  const header = `뱅크법률집사 AI 상담 기록\n${state.inst} · ${state.user}\n${new Date().toLocaleString('ko-KR')}\n\n================\n\n`;
-  const blob = new Blob([header + msgs], { type:'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'ai-consult-' + Date.now() + '.txt'; a.click();
-  URL.revokeObjectURL(url);
-}
-
-// 유틸
-function escape(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function num(n){ return (n||0).toLocaleString('ko-KR'); }
+// ════ 초기화 ════
+document.addEventListener('DOMContentLoaded', () => {
+  renderDocCatalog();
+  // 자동 로그인 데모 힌트
+  document.getElementById('inst-type').value = '신협';
+  document.getElementById('inst-name').value = '서울중앙신협';
+  document.getElementById('user-name-input').value = '김여신';
+});
 </script>
 </body>
 </html>
